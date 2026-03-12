@@ -1,1 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Golden Vault — Tanishq Induction Quest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;700&family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS — ART DECO NOIR
+═══════════════════════════════════════════════════════ */
+:root{
+  /* ════ TANISHQ × TATA OFFICIAL BRAND PALETTE ════ */
+  --void:#080600;
+  --deep:#0e0b01;
+  --surface:#181400;
+  --card:#201900;
+  --card2:#281f00;
+  --gold:#C8922A;          /* ← Tanishq Gold   */
+  --gold2:#A87420;
+  --gold3:#E8B448;
+  --gold4:#F5D080;
+  --tata-blue:#003087;     /* ← TATA Blue      */
+  --tata-blue2:#1a4fa8;
+  --gold-pale:rgba(200,146,42,.07);
+  --gold-mid:rgba(200,146,42,.18);
+  --teal:#003087;
+  --teal2:#001a5e;
+  --teal-g:rgba(0,48,135,.08);
+  --red:#C0392B;
+  --red-g:rgba(192,57,43,.09);
+  --green:#1B7A3A;
+  --green-g:rgba(27,122,58,.09);
+  --cream:#F5EBD0;
+  --text:#EEE0C0;
+  --text2:#B0986A;
+  --muted:#786040;
+  --border:rgba(200,146,42,.2);
+  --border2:rgba(200,146,42,.07);
+  --shadow:rgba(0,0,0,.8);
+}
 
+/* ═══════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--void);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ART DECO GRAIN OVERLAY
+═══════════════════════════════════════════════════════ */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:.4;
+}
+
+/* ═══════════════════════════════════════════════════════
+   STARS & AMBIENT
+═══════════════════════════════════════════════════════ */
+#ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(1)}50%{opacity:.85;transform:scale(1.5)}}
+
+/* AMBIENT GOLD SPARKLE */
+.streak{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(200,146,42,.12),transparent);animation:streakAnim linear infinite;}
+@keyframes streakAnim{from{transform:translateX(-100vw)}to{transform:translateX(200vw)}}
+
+/* MOVING TRACKS */
+#tracks{position:fixed;bottom:0;left:0;width:100%;height:4px;pointer-events:none;z-index:1;overflow:hidden;background:linear-gradient(90deg,transparent,rgba(200,146,42,.18),transparent);}
+.rail{display:none;}
+
+
+.tie{display:none;}
+
+
+/* SMOKE PUFFS */
+.puff{display:none;}
+
+
+/* ═══════════════════════════════════════════════════════
+   CINEMA CURTAIN
+═══════════════════════════════════════════════════════ */
+#curtain{
+  position:fixed;inset:0;
+  background:var(--void);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.6rem;
+  transition:opacity 1.2s ease;
+}
+#curtain.out{opacity:0;pointer-events:none;}
+
+/* Art deco curtain border */
+#curtain::before,#curtain::after{
+  content:'';
+  position:absolute;
+  border:1px solid rgba(212,168,67,.15);
+  border-radius:2px;
+  pointer-events:none;
+}
+#curtain::before{inset:24px;}
+#curtain::after{inset:30px;border-color:rgba(212,168,67,.07);}
+
+.ct-ornament{color:var(--gold);font-size:.8rem;letter-spacing:.4em;opacity:.5;text-transform:uppercase;}
+.ct-train{font-size:4rem;animation:sparkRock 1s ease-in-out infinite alternate;display:block;}
+@keyframes sparkRock{from{transform:translateX(-10px) rotate(-1deg)}to{transform:translateX(10px) rotate(1deg)}}
+.ct-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:3.2rem;font-weight:700;
+  color:var(--gold3);
+  text-align:center;
+  letter-spacing:.06em;
+  line-height:1;
+  text-shadow:0 0 40px rgba(212,168,67,.3);
+}
+.ct-title em{font-style:italic;color:var(--cream);font-weight:400;}
+.ct-sub{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--text2);}
+.ct-line{width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);}
+.ct-bar{width:180px;height:2px;background:rgba(212,168,67,.08);border-radius:2px;overflow:hidden;}
+.ct-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold3));border-radius:2px;animation:cfill 2.8s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes cfill{from{width:0}to{width:100%}}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATED VAULT PROGRESS (header track)
+═══════════════════════════════════════════════════════ */
+.train-track-bar{
+  position:relative;
+  height:6px;
+  background:rgba(212,168,67,.06);
+  overflow:visible;
+}
+.train-track-bar::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(212,168,67,.12) 0,rgba(212,168,67,.12) 6px,transparent 6px,transparent 12px);
+}
+.train-prog{
+  position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(90deg,var(--gold2),var(--gold3));
+  transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 0 12px rgba(212,168,67,.4);
+}
+.train-loco{
+  position:absolute;top:-8px;
+  font-size:1.1rem;
+  transition:left .8s cubic-bezier(.34,1.56,.64,1);
+  transform:translateX(-50%);
+  filter:drop-shadow(0 2px 6px rgba(212,168,67,.5));
+  line-height:1;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════════ */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,5,9,.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+}
+.header-main{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 2rem;
+}
+.logo{
+  font-family:'Cormorant Garant',serif;
+  font-size:1.25rem;font-weight:700;
+  color:var(--gold3);
+  display:flex;align-items:center;gap:.65rem;
+  letter-spacing:.04em;
+}
+.logo-loco{font-size:1.2rem;}
+.logo em{font-style:italic;color:var(--cream);font-weight:400;}
+
+#gtimer{
+  font-family:'Courier Prime',monospace;
+  font-size:1.4rem;font-weight:700;
+  color:var(--teal);
+  letter-spacing:.08em;
+  text-shadow:0 0 20px rgba(0,184,169,.4);
+  transition:color .3s,text-shadow .3s;
+}
+#gtimer.warn{color:#f59e0b;text-shadow:0 0 20px rgba(245,158,11,.4);animation:tpulse .85s infinite;}
+#gtimer.danger{color:var(--red);text-shadow:0 0 20px rgba(204,58,58,.5);animation:tpulse .4s infinite;}
+@keyframes tpulse{0%,100%{opacity:1}50%{opacity:.2}}
+
+.hdr-r{display:flex;align-items:center;gap:.9rem;}
+.badge{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--gold-pale);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:.28rem .85rem;
+  font-size:.72rem;color:var(--text2);
+}
+.pdot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 1.4s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.05}}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 288px;
+  min-height:calc(100vh - 76px);
+}
+.story{overflow-y:auto;position:relative;z-index:1;}
+.sidebar{
+  padding:1.2rem;
+  background:rgba(5,5,9,.9);
+  border-left:1px solid var(--border);
+  display:flex;flex-direction:column;gap:1.1rem;
+  position:sticky;top:76px;
+  height:calc(100vh - 76px);
+  overflow-y:auto;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN TRANSITIONS
+═══════════════════════════════════════════════════════ */
+.screen{display:none;}
+.screen.active{display:block;}
+.chapter{
+  display:none;
+  opacity:0;
+  transform:translateX(20px);
+  transition:opacity .65s ease,transform .65s ease;
+}
+.chapter.active{display:block;}
+.chapter.vis{opacity:1;transform:translateX(0);}
+
+/* ═══════════════════════════════════════════════════════
+   JOIN SCREEN
+═══════════════════════════════════════════════════════ */
+#join-screen{
+  min-height:calc(100vh - 76px);
+  display:none;
+  position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 20% 50%,rgba(212,168,67,.05) 0%,transparent 50%),
+             radial-gradient(ellipse at 85% 20%,rgba(0,184,169,.04) 0%,transparent 45%),
+             var(--void);
+}
+#join-screen.active{display:flex;align-items:center;justify-content:center;padding:2rem;}
+
+/* Art deco corner ornaments */
+.deco-corner{position:absolute;pointer-events:none;opacity:.15;}
+.deco-corner.tl{top:20px;left:20px;}
+.deco-corner.tr{top:20px;right:20px;transform:scaleX(-1);}
+.deco-corner.bl{bottom:20px;left:20px;transform:scaleY(-1);}
+.deco-corner.br{bottom:20px;right:20px;transform:scale(-1,-1);}
+
+.jcard{
+  position:relative;z-index:2;
+  text-align:center;
+  max-width:520px;width:95%;
+  padding:3.2rem 2.8rem;
+  background:rgba(212,168,67,.025);
+  border:1px solid var(--border);
+  border-radius:4px;
+  box-shadow:0 0 0 1px rgba(212,168,67,.05),0 30px 80px rgba(0,0,0,.6);
+}
+/* Art deco inner border */
+.jcard::before{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(212,168,67,.06);
+  border-radius:2px;pointer-events:none;
+}
+
+.j-ornament{
+  font-family:'Cormorant Garant',serif;
+  font-size:.7rem;letter-spacing:.35em;
+  color:var(--gold);opacity:.6;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.j-icon{font-size:3.5rem;display:block;margin-bottom:1rem;animation:sparkRock 2.5s ease-in-out infinite alternate;}
+.j-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--gold3);
+  line-height:1.1;margin-bottom:.4rem;
+  text-shadow:0 0 30px rgba(212,168,67,.2);
+}
+.j-title em{font-style:italic;color:var(--cream);font-weight:400;}
+.j-div{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:.8rem auto 1rem;}
+.j-sub{color:var(--text2);font-size:.84rem;line-height:1.78;margin-bottom:2rem;}
+.j-sub strong{color:var(--text);}
+
+.jfields{display:flex;flex-direction:column;gap:.85rem;margin-bottom:1.1rem;text-align:left;}
+.flabel{font-size:.63rem;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);opacity:.7;margin-bottom:.28rem;}
+.jfields input{
+  width:100%;
+  background:rgba(212,168,67,.03);
+  border:1px solid rgba(212,168,67,.12);
+  border-radius:3px;
+  padding:.82rem 1rem;
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:.88rem;outline:none;
+  transition:all .22s;
+}
+.jfields input:focus{border-color:rgba(0,184,169,.4);background:rgba(0,184,169,.03);box-shadow:0 0 0 3px rgba(0,184,169,.07);}
+.jfields input::placeholder{color:rgba(138,133,120,.5);}
+.code-row{display:flex;gap:.5rem;}
+.code-row input{flex:1;text-transform:uppercase;letter-spacing:.07em;font-family:'Courier Prime',monospace;}
+.genbtn{
+  padding:.82rem .9rem;
+  background:rgba(212,168,67,.06);
+  border:1px solid rgba(212,168,67,.15);
+  border-radius:3px;
+  color:var(--gold);
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.72rem;
+  cursor:pointer;white-space:nowrap;transition:all .2s;
+}
+.genbtn:hover{background:rgba(212,168,67,.14);}
+
+.hintbox{
+  background:rgba(0,184,169,.04);
+  border:1px solid rgba(0,184,169,.16);
+  border-radius:3px;
+  padding:.85rem 1rem;text-align:left;
+  margin-bottom:1.1rem;
+  font-size:.74rem;line-height:1.7;color:var(--text2);
+}
+.hintbox strong{color:var(--teal);}
+
+.board-btn{
+  width:100%;padding:.92rem;
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  border:none;border-radius:3px;
+  color:var(--void);
+  font-family:'Cormorant Garant',serif;
+  font-size:1.05rem;font-weight:700;
+  cursor:pointer;transition:all .25s;
+  letter-spacing:.05em;
+  position:relative;overflow:hidden;
+}
+.board-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.board-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,168,67,.28);}
+.board-btn:hover::before{opacity:1;}
+.board-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.fbstat{font-size:.68rem;margin-top:.55rem;color:var(--muted);text-align:center;min-height:1.1em;}
+.fbstat.ok{color:#4ade80;}.fbstat.err{color:var(--red);}
+
+/* ═══════════════════════════════════════════════════════
+   CHAPTER SCENE HEADER
+═══════════════════════════════════════════════════════ */
+.scene{
+  position:relative;overflow:hidden;
+  padding:4rem 2.8rem 3rem;
+  min-height:260px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.scene-bg{position:absolute;inset:0;z-index:0;}
+.scene-vignette{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(0deg,var(--void) 0%,rgba(5,5,9,.5) 50%,rgba(5,5,9,.1) 100%);
+}
+.scene-content{position:relative;z-index:2;}
+.scene-bignum{
+  font-family:'Cormorant Garant',serif;
+  font-size:9rem;font-weight:700;
+  position:absolute;top:.5rem;right:1.5rem;
+  opacity:.04;line-height:1;
+  color:var(--gold3);pointer-events:none;
+  letter-spacing:-.02em;
+}
+.scene-tag{
+  font-size:.63rem;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--gold);opacity:.8;
+  margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.scene-tag::before{content:'◆';font-size:.4rem;}
+.scene-emoji{
+  font-size:3.5rem;display:block;margin-bottom:.8rem;
+  filter:drop-shadow(0 4px 16px rgba(0,0,0,.6));
+  animation:heroFloat 5s ease-in-out infinite;
+}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.scene-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--gold3);line-height:1.1;
+  margin-bottom:.4rem;
+  text-shadow:0 2px 24px rgba(0,0,0,.7);
+}
+.scene-sub{font-size:.83rem;color:var(--text2);font-style:italic;line-height:1.5;}
+.scene-rule{
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold2),transparent);
+  z-index:2;
+}
+
+/* SCENE BACKGROUNDS */
+.bg-night{background:linear-gradient(160deg,#100c06 0%,#1a1408 40%,#100c06 100%);}
+.bg-office{background:linear-gradient(160deg,#0c1008 0%,#121a0a 40%,#0c1008 100%);}
+.bg-mirror{background:linear-gradient(160deg,#100c04 0%,#1c1606 40%,#100c04 100%);}
+.bg-archive{background:linear-gradient(160deg,#0e0c06 0%,#181408 40%,#0e0c06 100%);}
+.bg-witness{background:linear-gradient(160deg,#080e06 0%,#0e1808 40%,#080e06 100%);}
+.bg-decode{background:linear-gradient(160deg,#100e06 0%,#1a1808 40%,#100e06 100%);}
+
+/* Animated rain streaks for night scene */
+.rain-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.rain-drop{position:absolute;width:1px;background:linear-gradient(180deg,transparent,rgba(180,200,255,.15));animation:rainFall linear infinite;}
+@keyframes rainFall{from{transform:translateY(-100px)}to{transform:translateY(400px)}}
+
+/* City lights for night scene */
+.city-lights{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.light-dot{position:absolute;border-radius:50%;animation:lightBlink ease-in-out infinite;}
+@keyframes lightBlink{0%,100%{opacity:.3}50%{opacity:.9}}
+
+/* ═══════════════════════════════════════════════════════
+   STORY BODY
+═══════════════════════════════════════════════════════ */
+.story-body{padding:2.2rem 2.8rem;border-bottom:1px solid var(--border2);}
+.story-body p{font-size:.92rem;color:var(--text2);line-height:1.9;margin-bottom:.9rem;}
+.story-body em{color:var(--text);font-style:italic;}
+.story-body strong{color:var(--gold);font-weight:500;}
+.story-body p:last-child{margin-bottom:0;}
+
+/* Quote pull */
+.pull-quote{
+  margin:1.2rem 0;
+  padding:1.1rem 1.5rem;
+  border-left:3px solid var(--gold2);
+  background:rgba(212,168,67,.03);
+  font-family:'Cormorant Garant',serif;
+  font-size:1.1rem;font-style:italic;
+  color:var(--cream);line-height:1.65;
+}
+.pull-quote cite{display:block;font-size:.7rem;font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-top:.5rem;}
+
+/* ═══════════════════════════════════════════════════════
+   DIALOGUE / CHAT
+═══════════════════════════════════════════════════════ */
+.dialogue-wrap{padding:1.5rem 2.8rem;display:flex;flex-direction:column;gap:.8rem;}
+.bubble{
+  max-width:78%;
+  padding:.9rem 1.15rem;
+  border-radius:3px;
+  font-size:.85rem;line-height:1.7;
+  animation:bubIn .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes bubIn{from{transform:scale(.82) translateY(14px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.bubble-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:.3rem;}
+
+.bubble.intercom{
+  background:rgba(139,92,246,.06);
+  border:1px solid rgba(139,92,246,.18);
+  align-self:flex-start;color:var(--text2);
+}
+.bubble.intercom .bubble-label{color:var(--purple);}
+.bubble.you{
+  background:var(--teal-g);
+  border:1px solid rgba(0,184,169,.18);
+  align-self:flex-end;color:var(--text);
+}
+.bubble.you .bubble-label{color:var(--teal);}
+.bubble.narrator{
+  background:var(--gold-pale);
+  border:1px solid var(--border);
+  align-self:flex-start;color:var(--text2);
+}
+.bubble.narrator .bubble-label{color:var(--gold);}
+
+/* Typewriter effect */
+.typewriter{overflow:hidden;border-right:2px solid var(--gold);white-space:nowrap;animation:typing 2s steps(40,end),blink-caret .7s step-end infinite;}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink-caret{0%,100%{border-color:transparent}50%{border-color:var(--gold)}}
+
+/* ═══════════════════════════════════════════════════════
+   CONTINUE BUTTON
+═══════════════════════════════════════════════════════ */
+.ch-footer{padding:1.5rem 2.8rem 2.5rem;}
+.cont-btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:.85rem 2rem;
+  background:rgba(212,168,67,.05);
+  border:1px solid rgba(212,168,67,.2);
+  border-radius:3px;
+  color:var(--gold3);
+  font-family:'Cormorant Garant',serif;
+  font-size:1rem;font-weight:700;
+  cursor:pointer;transition:all .25s;
+  letter-spacing:.04em;
+  position:relative;overflow:hidden;
+}
+.cont-btn::before{
+  content:'';position:absolute;
+  left:-100%;top:0;bottom:0;width:100%;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,.07),transparent);
+  transition:left .45s;
+}
+.cont-btn:hover::before{left:100%;}
+.cont-btn:hover{
+  background:rgba(212,168,67,.1);
+  border-color:rgba(212,168,67,.38);
+  transform:translateX(6px);
+  box-shadow:0 0 20px rgba(212,168,67,.1);
+}
+.arr{transition:transform .25s;}
+.cont-btn:hover .arr{transform:translateX(6px);}
+
+/* ═══════════════════════════════════════════════════════
+   PUZZLE CARDS (case files)
+═══════════════════════════════════════════════════════ */
+.puzzle-wrap{padding:0 2.2rem 2.2rem;}
+.pcard{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+  animation:cardSlideIn .5s cubic-bezier(.34,1.2,.64,1);
+}
+@keyframes cardSlideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+.pcard-hdr{
+  padding:1.05rem 1.5rem;
+  background:rgba(212,168,67,.04);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:.7rem;
+}
+.pcard-ico{font-size:1.1rem;}
+.pcard-lbl{font-size:.64rem;text-transform:uppercase;letter-spacing:.15em;color:var(--gold);font-weight:700;}
+.pcard-body{padding:1.5rem;}
+
+.p-case{
+  background:rgba(212,168,67,.025);
+  border-left:3px solid var(--gold2);
+  padding:.95rem 1.15rem;border-radius:0 4px 4px 0;
+  font-size:.83rem;color:var(--text2);line-height:1.78;
+  margin-bottom:1.15rem;font-style:italic;
+}
+.p-q{
+  font-family:'Cormorant Garant',serif;
+  font-size:1.05rem;color:var(--cream);
+  margin-bottom:.5rem;line-height:1.5;
+}
+.p-hint{font-size:.74rem;color:var(--muted);margin-bottom:1rem;font-style:italic;}
+.p-fitb{
+  font-family:'Cormorant Garant',serif;
+  font-size:1rem;color:var(--cream);
+  line-height:1.75;margin-bottom:1.1rem;
+}
+.blank{
+  display:inline-block;min-width:110px;
+  border-bottom:2px solid var(--gold2);
+  color:var(--gold3);font-weight:700;
+  text-align:center;vertical-align:bottom;
+  height:1.6em;padding:0 .35rem;
+  transition:all .5s;font-family:'Cormorant Garant',serif;
+}
+.blank.filled{border-color:var(--teal);color:var(--teal);}
+
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:.52rem;}
+.opt{
+  width:100%;text-align:left;
+  background:rgba(212,168,67,.02);
+  border:1.5px solid rgba(212,168,67,.08);
+  border-radius:3px;
+  padding:.76rem 1rem;
+  color:var(--text2);
+  font-family:'DM Sans',sans-serif;font-size:.84rem;
+  cursor:pointer;transition:all .22s;
+  display:flex;align-items:flex-start;gap:.7rem;
+  line-height:1.55;
+}
+.opt:hover:not(:disabled){
+  border-color:rgba(0,184,169,.38);
+  background:rgba(0,184,169,.05);
+  color:var(--cream);
+  transform:translateX(4px);
+}
+.opt.correct{border-color:rgba(45,170,158,.45);background:var(--green-g);color:var(--teal);}
+.opt.wrong{border-color:rgba(204,58,58,.38);background:var(--red-g);color:var(--red);}
+.opt:disabled{cursor:not-allowed;}
+.oletter{
+  min-width:26px;height:26px;border-radius:3px;
+  background:rgba(212,168,67,.06);
+  border:1px solid rgba(212,168,67,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Courier Prime',monospace;font-weight:700;font-size:.66rem;
+  flex-shrink:0;color:var(--gold);transition:all .22s;margin-top:1px;
+}
+.opt.correct .oletter{background:rgba(45,170,158,.16);border-color:rgba(45,170,158,.35);color:var(--teal);}
+.opt.wrong   .oletter{background:rgba(204,58,58,.12);border-color:rgba(204,58,58,.28);color:var(--red);}
+
+/* FEEDBACK */
+.feedback{
+  display:none;border-radius:3px;
+  padding:.88rem 1.05rem;
+  font-size:.8rem;line-height:1.68;
+  margin-top:.88rem;
+}
+.feedback.show{display:block;animation:fUp .4s ease;}
+@keyframes fUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.feedback.correct{background:var(--green-g);border:1px solid rgba(45,170,158,.2);color:var(--teal);}
+.feedback.wrong{background:var(--red-g);border:1px solid rgba(204,58,58,.18);color:var(--red);}
+
+/* NEXT BTN */
+.nxt-btn{
+  display:none;margin-top:1.1rem;
+  padding:.72rem 1.5rem;
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  color:var(--void);border:none;border-radius:3px;
+  font-family:'Cormorant Garant',serif;font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:all .22s;letter-spacing:.03em;
+}
+.nxt-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,168,67,.25);}
+
+/* SUBMIT BTN */
+.sub-btn{
+  padding:.74rem 1.5rem;
+  background:linear-gradient(135deg,var(--teal2),var(--teal));
+  color:#fff;border:none;border-radius:3px;
+  font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:700;
+  cursor:pointer;transition:all .22s;letter-spacing:.02em;
+}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,184,169,.25);}
+
+/* ═══════════════════════════════════════════════════════
+   MATCHING PUZZLE
+═══════════════════════════════════════════════════════ */
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.match-col-hdr{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);opacity:.7;margin-bottom:.5rem;text-align:center;}
+.match-items{display:flex;flex-direction:column;gap:.45rem;}
+.match-chip{
+  padding:.62rem .85rem;border-radius:4px;
+  font-size:.78rem;line-height:1.45;
+  cursor:pointer;transition:all .22s;
+  user-select:none;
+  position:relative;
+}
+.match-left{
+  background:rgba(200,146,42,.06);
+  border:1.5px solid rgba(200,146,42,.18);
+  color:var(--text);font-weight:600;
+  text-align:left;
+}
+.match-left:hover{background:rgba(200,146,42,.14);border-color:rgba(200,146,42,.38);}
+.match-left.selected{
+  background:rgba(200,146,42,.2);
+  border-color:var(--gold3);
+  color:var(--gold4);
+  box-shadow:0 0 0 2px rgba(200,146,42,.2);
+}
+.match-left.matched-ok{background:rgba(46,125,50,.12);border-color:rgba(46,125,50,.4);color:#6fcf7a;}
+.match-left.matched-err{background:rgba(181,41,28,.1);border-color:rgba(181,41,28,.35);color:#e07070;}
+.match-right{
+  background:rgba(0,48,135,.06);
+  border:1.5px solid rgba(0,48,135,.18);
+  color:var(--text2);
+  text-align:left;
+}
+.match-right:hover{background:rgba(0,48,135,.12);border-color:rgba(0,48,135,.35);color:var(--text);}
+.match-right.selected-target{
+  background:rgba(0,48,135,.18);
+  border-color:var(--tata-blue2);
+  color:#7aadff;
+  box-shadow:0 0 0 2px rgba(0,48,135,.2);
+}
+.match-right.matched-ok{background:rgba(46,125,50,.12);border-color:rgba(46,125,50,.4);color:#6fcf7a;}
+.match-right.matched-err{background:rgba(181,41,28,.1);border-color:rgba(181,41,28,.35);color:#e07070;}
+.match-connector{display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);padding-top:1.8rem;}
+.match-score{font-size:.78rem;color:var(--gold);margin-top:.7rem;font-style:italic;}
+
+/* ═══════════════════════════════════════════════════════
+   SUPPLY CHAIN SEQUENCE PUZZLE
+═══════════════════════════════════════════════════════ */
+.seq-intro{font-size:.82rem;color:var(--text2);line-height:1.7;margin-bottom:.9rem;}
+.seq-hint{font-size:.73rem;color:var(--muted);font-style:italic;margin-bottom:1rem;padding:.55rem .85rem;border-left:2px solid rgba(200,146,42,.22);background:rgba(200,146,42,.03);}
+.seq-slot-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:5px;border:1px solid rgba(200,146,42,.08);min-height:52px;}
+.seq-slot{
+  flex:1;min-width:70px;max-width:100px;
+  border:1.5px dashed rgba(200,146,42,.2);border-radius:4px;
+  padding:.3rem .4rem;text-align:center;
+  font-size:.68rem;color:var(--muted);
+  min-height:42px;display:flex;align-items:center;justify-content:center;
+  transition:all .3s;line-height:1.3;
+}
+.seq-slot.filled{border-style:solid;border-color:var(--gold2);color:var(--gold3);background:rgba(200,146,42,.07);font-size:.7rem;font-weight:600;}
+.seq-slot.correct-slot{border-color:rgba(27,122,58,.5);background:rgba(27,122,58,.1);color:#6fcf7a;}
+.seq-grid{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.8rem;}
+.seq-card{
+  display:flex;align-items:center;gap:.8rem;
+  background:rgba(200,146,42,.03);
+  border:1.5px solid rgba(200,146,42,.12);
+  border-radius:5px;padding:.72rem 1rem;
+  cursor:pointer;transition:all .2s;
+  user-select:none;
+}
+.seq-card:hover:not(.locked){background:rgba(200,146,42,.09);border-color:rgba(200,146,42,.35);transform:translateX(4px);}
+.seq-card.selected{background:rgba(200,146,42,.15);border-color:var(--gold3);box-shadow:0 0 0 2px rgba(200,146,42,.2);}
+.seq-card.locked.ok{background:rgba(27,122,58,.09);border-color:rgba(27,122,58,.4);cursor:default;opacity:.8;}
+.seq-card.locked.err{border-color:rgba(192,57,43,.38);animation:seqShake .32s ease;}
+@keyframes seqShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.seq-icon{font-size:1.35rem;flex-shrink:0;}
+.seq-label{font-size:.83rem;color:var(--text);line-height:1.4;flex:1;}
+.seq-card.locked.ok .seq-label{color:#6fcf7a;}
+.seq-badge{
+  min-width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;font-family:'Courier Prime',monospace;
+  background:rgba(200,146,42,.08);border:1.5px solid rgba(200,146,42,.2);
+  color:var(--gold3);flex-shrink:0;transition:all .3s;
+}
+.seq-card.locked.ok .seq-badge{background:rgba(27,122,58,.16);border-color:rgba(27,122,58,.45);color:#6fcf7a;}
+.seq-progress{font-size:.75rem;color:var(--gold);text-align:center;min-height:1.3em;font-style:italic;}
+
+/* ═══════════════════════════════════════════════════════
+   REVEAL SECTIONS (sequential unlocking)
+═══════════════════════════════════════════════════════ */
+.reveal{display:none;margin-top:1.4rem;animation:fUp .55s ease;}
+.reveal.shown{display:block;}
+
+/* ILLUSTRATION PANELS */
+.illus{text-align:center;padding:1.8rem 2.8rem 1rem;}
+.illus-big{font-size:7rem;display:inline-block;animation:floatBob 5s ease-in-out infinite;filter:drop-shadow(0 8px 24px rgba(0,0,0,.6));}
+@keyframes floatBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-18px) rotate(2deg)}}
+.illus-cap{font-size:.74rem;color:var(--muted);margin-top:.7rem;font-style:italic;letter-spacing:.04em;}
+
+/* ═══════════════════════════════════════════════════════
+   ART DECO CHAPTER DIVIDER
+═══════════════════════════════════════════════════════ */
+.ch-divider{
+  display:flex;align-items:center;gap:1rem;
+  padding:.7rem 2.8rem;
+  opacity:.4;
+}
+.ch-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);}
+.ch-divider-gem{color:var(--gold);font-size:.5rem;}
+
+/* CHAPTER STRIP (pip progress) */
+.ch-strip{
+  background:rgba(212,168,67,.025);
+  border-bottom:1px solid var(--border2);
+  padding:.6rem 2.8rem;
+  display:flex;align-items:center;gap:.45rem;
+}
+.pip{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(212,168,67,.18);transition:all .4s;}
+.pip.done{background:var(--gold);border-color:var(--gold);}
+.pip.curr{background:var(--teal);border-color:var(--teal);box-shadow:0 0 8px rgba(0,184,169,.5);animation:blink .9s infinite;}
+.strip-lbl{font-size:.62rem;color:var(--muted);margin-left:auto;letter-spacing:.06em;font-family:'Courier Prime',monospace;}
+
+/* ═══════════════════════════════════════════════════════
+   BURST PARTICLES
+═══════════════════════════════════════════════════════ */
+#burst{position:fixed;inset:0;pointer-events:none;z-index:600;}
+.bp{position:absolute;border-radius:50%;animation:bpanim ease-out forwards;}
+@keyframes bpanim{from{opacity:1;transform:translate(-50%,-50%) scale(1.2)}to{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(0)}}
+
+/* ═══════════════════════════════════════════════════════
+   COMPLETE SCREEN
+═══════════════════════════════════════════════════════ */
+#complete-screen{
+  display:none;
+  min-height:calc(100vh - 76px);
+  background:radial-gradient(ellipse at center,rgba(212,168,67,.06) 0%,transparent 65%),var(--void);
+}
+#complete-screen.active{display:flex;align-items:center;justify-content:center;padding:3rem 2rem;}
+.comp-card{
+  text-align:center;max-width:580px;
+  padding:3.2rem 2.8rem;
+  background:rgba(212,168,67,.025);
+  border:1px solid var(--border);
+  border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  position:relative;
+}
+.comp-card::before{content:'';position:absolute;inset:8px;border:1px solid rgba(212,168,67,.05);border-radius:2px;pointer-events:none;}
+.comp-trophy{font-size:4rem;display:block;margin-bottom:1rem;animation:bounce .9s infinite alternate;}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-16px)}}
+.comp-ornament{font-family:'Cormorant Garant',serif;font-size:.7rem;letter-spacing:.35em;color:var(--gold);opacity:.6;text-transform:uppercase;margin-bottom:.6rem;}
+.comp-title{font-family:'Cormorant Garant',serif;font-size:2.1rem;font-weight:700;color:var(--gold3);margin-bottom:.3rem;}
+.comp-time{
+  font-family:'Courier Prime',monospace;
+  font-size:3.2rem;font-weight:700;
+  color:#4ade80;
+  text-shadow:0 0 35px rgba(74,222,128,.4);
+  margin:.8rem 0;
+}
+.comp-rank{font-size:.82rem;color:var(--muted);margin-bottom:1.6rem;font-style:italic;}
+.comp-div{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:.5rem auto 1.2rem;}
+.findings{background:rgba(0,184,169,.04);border:1px solid rgba(0,184,169,.12);border-radius:4px;padding:1.4rem;text-align:left;}
+.findings-title{font-family:'Cormorant Garant',serif;font-size:.92rem;font-style:italic;color:var(--teal);margin-bottom:.82rem;}
+.finding{display:flex;gap:.55rem;margin-bottom:.52rem;font-size:.79rem;color:var(--text2);line-height:1.58;}
+.finding-dot{color:var(--gold);flex-shrink:0;}
+.board-again{
+  margin-top:1.6rem;padding:.9rem 2.2rem;
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  border:none;border-radius:3px;
+  color:var(--void);
+  font-family:'Cormorant Garant',serif;font-size:.98rem;font-weight:700;
+  cursor:pointer;transition:all .22s;letter-spacing:.04em;
+}
+.board-again:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(212,168,67,.3);}
+
+/* ═══════════════════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════════════════ */
+.lb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;}
+.lb-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:.95rem;color:var(--gold3);
+  display:flex;align-items:center;gap:.35rem;
+  letter-spacing:.03em;
+}
+.lb-live{
+  font-size:.58rem;background:rgba(204,58,58,.08);
+  border:1px solid rgba(204,58,58,.25);
+  color:#ff8888;padding:.1rem .42rem;border-radius:2px;
+  animation:blink 2s infinite;letter-spacing:.08em;
+}
+.lb-list{display:flex;flex-direction:column;gap:.5rem;}
+.lbe{
+  display:flex;align-items:center;gap:.62rem;
+  background:rgba(212,168,67,.02);
+  border:1px solid rgba(212,168,67,.07);
+  border-radius:3px;
+  padding:.62rem .82rem;
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.lbe::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;}
+.lbe.r1::before{background:var(--gold)}.lbe.r2::before{background:#c0c0c0}.lbe.r3::before{background:#cd7f32}
+.lbe.r1{border-color:rgba(212,168,67,.16);}
+.lbe.new{animation:slideIn .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes slideIn{from{transform:translateX(44px);opacity:0}to{transform:translateX(0);opacity:1}}
+.lbrank{font-family:'Courier Prime',monospace;font-size:.9rem;min-width:20px;text-align:center;}
+.r1 .lbrank{color:var(--gold)}.r2 .lbrank{color:#c0c0c0}.r3 .lbrank{color:#cd7f32}
+.lbav{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;background:linear-gradient(135deg,var(--teal2),var(--teal));flex-shrink:0;}
+.lbinfo{flex:1;min-width:0;}
+.lbname{font-size:.76rem;font-weight:700;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lbsub{font-size:.62rem;color:var(--muted);margin-top:.07rem;}
+.lbtime{font-family:'Courier Prime',monospace;font-size:.78rem;color:#4ade80;}
+.lb-empty{text-align:center;color:var(--muted);font-size:.72rem;padding:1.5rem .5rem;border:1px dashed rgba(212,168,67,.08);border-radius:3px;line-height:1.7;}
+.sb-div{height:1px;background:var(--border2);}
+
+/* VAULT PROGRESS MAP */
+.tmap{background:rgba(212,168,67,.02);border:1px solid var(--border);border-radius:4px;padding:.9rem;}
+.tmap-title{font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.82rem;}
+.tmap-stops{display:flex;flex-direction:column;}
+.ts{display:flex;align-items:flex-start;gap:.62rem;padding:.3rem 0;position:relative;}
+.ts::before{content:'';position:absolute;left:8px;top:20px;bottom:-4px;width:1px;background:rgba(212,168,67,.08);}
+.ts:last-child::before{display:none;}
+.ts-node{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(212,168,67,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:.58rem;transition:all .45s;color:var(--muted);}
+.ts.done .ts-node{background:var(--gold);border-color:var(--gold);color:var(--void);}
+.ts.curr .ts-node{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 10px rgba(0,184,169,.4);animation:blink .85s infinite;}
+.ts-lbl{font-size:.7rem;color:var(--muted);line-height:1.3;transition:color .35s;padding-top:2px;}
+.ts.done .ts-lbl{color:var(--text2);}
+.ts.curr .ts-lbl{color:var(--cream);font-weight:500;}
+
+/* ACTIVE PLAYERS */
+.abox{background:rgba(212,168,67,.02);border:1px solid var(--border);border-radius:4px;padding:.88rem;}
+.abox-title{font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.6rem;}
+#alist{display:flex;flex-wrap:wrap;gap:.35rem;}
+.achip{font-size:.66rem;background:rgba(0,184,169,.07);border:1px solid rgba(0,184,169,.16);border-radius:2px;padding:.18rem .52rem;color:rgba(0,200,186,.9);}
+
+/* TOAST */
+#toasts{position:fixed;top:80px;right:1.1rem;display:flex;flex-direction:column;gap:.45rem;z-index:500;}
+.toast{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:.62rem 1rem;font-size:.76rem;max-width:265px;display:flex;align-items:center;gap:.4rem;color:var(--text2);animation:tIn .28s ease,tOut .3s ease 3.9s forwards;}
+.toast.success{border-color:rgba(74,222,128,.28);}
+.toast.info{border-color:rgba(0,184,169,.28);}
+.toast.error{border-color:rgba(204,58,58,.28);}
+@keyframes tIn{from{transform:translateX(44px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes tOut{to{transform:translateX(44px);opacity:0}}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .header-main{padding:.75rem 1.2rem;}
+  .scene{padding:3rem 1.5rem 2rem;min-height:200px;}
+  .scene-bignum{font-size:5rem;}
+  .story-body,.ch-footer,.ch-strip,.dialogue-wrap{padding-left:1.5rem;padding-right:1.5rem;}
+  .puzzle-wrap{padding:0 1.2rem 1.5rem;}
+  .illus{padding:1.2rem 1.5rem .5rem;}
+  .jcard{padding:2.2rem 1.6rem;}
+  .j-title{font-size:1.9rem;}
+  .scene-title{font-size:1.8rem;}
+  #gtimer{font-size:1.1rem;}
+  .ct-title{font-size:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ AMBIENT LAYERS ═══ -->
+<div id="ambient"></div>
+<div id="tracks"></div>
+<div id="burst"></div>
+<div id="toasts"></div>
+
+<!-- ═══ CINEMA CURTAIN ═══ -->
+<div id="curtain">
+  <div class="ct-ornament">◆ &nbsp; Induction Quest Begins &nbsp; ◆</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:2rem;margin-bottom:.5rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="72" height="36" style="display:inline-block;vertical-align:middle;">
+  <rect width="120" height="60" rx="4" fill="none"/>
+  <!-- TATA wordmark in brand blue -->
+  <text x="60" y="44" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#003087" text-anchor="middle" letter-spacing="3">TATA</text>
+  <!-- T-mark simplified oval -->
+  <ellipse cx="60" cy="12" rx="22" ry="8" fill="none" stroke="#003087" stroke-width="2.5"/>
+  <rect x="57" y="4" width="6" height="16" rx="1" fill="#003087"/>
+</svg>
+    <span style="color:rgba(200,146,42,.3);font-size:1.4rem;">◆</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 52" width="110" height="36" style="display:inline-block;vertical-align:middle;">
+  <!-- Tanishq T-mark symbol -->
+  <g transform="translate(6,4)">
+    <path d="M18 0 L22 0 L22 8 L28 8 L28 12 L22 12 L22 44 L18 44 L18 12 L12 12 L12 8 L18 8 Z" fill="#c8922a"/>
+    <circle cx="20" cy="46" r="2" fill="#c8922a"/>
+  </g>
+  <!-- TANISHQ wordmark -->
+  <text x="85" y="34" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#c8922a" text-anchor="middle" letter-spacing="4" font-style="italic">TANISHQ</text>
+  <!-- decorative line -->
+  <line x1="38" y1="48" x2="148" y2="48" stroke="#c8922a" stroke-width="0.8" opacity="0.5"/>
+</svg>
+  </div>
+  <div class="ct-title">The Golden <em>Vault</em></div>
+  <div class="ct-line"></div>
+  <div class="ct-sub">Tanishq Induction · Unlock Every Chamber</div>
+  <div class="ct-bar"><div class="ct-fill"></div></div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-main">
+    <div class="logo" style="display:flex;align-items:center;gap:.75rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" width="60" height="36">
+  <ellipse cx="40" cy="14" rx="22" ry="7.5" fill="none" stroke="#003087" stroke-width="2.5"/>
+  <rect x="36.5" y="6.5" width="7" height="15" rx="1" fill="#003087"/>
+  <text x="40" y="44" font-family="Arial Black,Arial,sans-serif" font-size="16" font-weight="900" fill="#003087" text-anchor="middle" letter-spacing="2.5">TATA</text>
+</svg><span style="color:rgba(200,146,42,.28);font-size:.7rem;">✦</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 44" width="120" height="34">
+  <g transform="translate(6,2)">
+    <rect x="5" y="0" width="6" height="38" rx="1.5" fill="#C8922A"/>
+    <rect x="0" y="0" width="16" height="6" rx="1.5" fill="#C8922A"/>
+    <circle cx="8" cy="42" r="2.5" fill="#C8922A"/>
+  </g>
+  <text x="92" y="30" font-family="Georgia,Palatino,serif" font-size="18" font-weight="700" fill="#C8922A" text-anchor="middle" letter-spacing="4" font-style="italic">TANISHQ</text>
+</svg></div>
+    <div id="gtimer">⏱ 00:00</div>
+    <div class="hdr-r">
+      <div class="score-badge" id="score-badge" style="display:none;">
+        <span class="score-label">SCORE</span>
+        <span class="score-val" id="score-display">0</span>
+      </div>
+      <div class="badge"><div class="pdot"></div><span id="badge-name">Not yet joined</span></div>
+    </div>
+  </div>
+  <div class="train-track-bar">
+    <div class="train-prog" id="train-prog" style="width:0%"></div>
+    <div class="train-loco" id="train-loco" style="left:0%">💎</div>
+  </div>
+</header>
+
+<!-- ═══ LAYOUT ═══ -->
+<div class="layout">
+<div class="story" id="story">
+
+<!-- ══════════════════════════════════════
+   JOIN SCREEN
+══════════════════════════════════════ -->
+<div id="join-screen" class="screen active">
+  <!-- Art deco corner ornaments as SVG -->
+  <svg class="deco-corner tl" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M5 5 L5 30 M5 5 L30 5 M5 15 L15 5 M15 5 L15 15 L5 15" stroke="rgba(212,168,67,.4)" stroke-width="1"/>
+  </svg>
+  <svg class="deco-corner tr" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M5 5 L5 30 M5 5 L30 5 M5 15 L15 5 M15 5 L15 15 L5 15" stroke="rgba(212,168,67,.4)" stroke-width="1"/>
+  </svg>
+  <svg class="deco-corner bl" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M5 5 L5 30 M5 5 L30 5 M5 15 L15 5 M15 5 L15 15 L5 15" stroke="rgba(212,168,67,.4)" stroke-width="1"/>
+  </svg>
+  <svg class="deco-corner br" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M5 5 L5 30 M5 5 L30 5 M5 15 L15 5 M15 5 L15 15 L5 15" stroke="rgba(212,168,67,.4)" stroke-width="1"/>
+  </svg>
+
+  <div class="jcard">
+    <div class="j-ornament">◆ &nbsp; Tanishq · Titan Company · TATA &nbsp; ◆</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="72" height="36" style="display:inline-block;vertical-align:middle;">
+  <rect width="120" height="60" rx="4" fill="none"/>
+  <!-- TATA wordmark in brand blue -->
+  <text x="60" y="44" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#003087" text-anchor="middle" letter-spacing="3">TATA</text>
+  <!-- T-mark simplified oval -->
+  <ellipse cx="60" cy="12" rx="22" ry="8" fill="none" stroke="#003087" stroke-width="2.5"/>
+  <rect x="57" y="4" width="6" height="16" rx="1" fill="#003087"/>
+</svg>
+    <span style="color:rgba(200,146,42,.4);font-size:1.1rem;">◆</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 52" width="110" height="36" style="display:inline-block;vertical-align:middle;">
+  <!-- Tanishq T-mark symbol -->
+  <g transform="translate(6,4)">
+    <path d="M18 0 L22 0 L22 8 L28 8 L28 12 L22 12 L22 44 L18 44 L18 12 L12 12 L12 8 L18 8 Z" fill="#c8922a"/>
+    <circle cx="20" cy="46" r="2" fill="#c8922a"/>
+  </g>
+  <!-- TANISHQ wordmark -->
+  <text x="85" y="34" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#c8922a" text-anchor="middle" letter-spacing="4" font-style="italic">TANISHQ</text>
+  <!-- decorative line -->
+  <line x1="38" y1="48" x2="148" y2="48" stroke="#c8922a" stroke-width="0.8" opacity="0.5"/>
+</svg>
+  </div>
+    <div class="j-title">The Golden <em>Vault</em></div>
+    <div class="j-div"></div>
+    <p class="j-sub">Welcome to Tanishq! As a new team member, you must prove your knowledge to unlock the <strong>Golden Vault</strong> — six chambers filled with secrets about Tanishq, Titan and TATA. Crack every chamber to earn your place as a true Tanishq insider.</p>
+    <div class="jfields">
+      <div>
+        <div class="flabel">Investigator Name</div>
+        <input type="text" id="inp-name" placeholder="e.g. Detective Morgan…" maxlength="22"/>
+      </div>
+      <div>
+        <div class="flabel">Mission Code <span style="opacity:.45;font-size:.58rem">(share with your team)</span></div>
+        <div class="code-row">
+          <input type="text" id="inp-code" placeholder="EXPRESS-4271" maxlength="16"/>
+          <button class="genbtn" onclick="generateCode()">🎲 Generate</button>
+        </div>
+      </div>
+    </div>
+    <div class="hintbox">
+      ✨ <strong>How multiplayer works:</strong><br/>
+      <span style="color:var(--text2)">1. Player 1 clicks <strong style="color:var(--gold)">Generate</strong> to create a code<br/>
+      2. Share that code with your team (copy it below)<br/>
+      3. Everyone enters the <strong style="color:var(--gold)">same code</strong> and clicks Board<br/>
+      4. All players share the same live leaderboard</span>
+    </div>
+    <div id="share-panel" style="display:none;background:rgba(0,184,169,.05);border:1px solid rgba(0,184,169,.2);border-radius:3px;padding:.75rem 1rem;margin-bottom:1rem;text-align:left;">
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:.45rem;">📋 Share this code with your team</div>
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        <div id="share-code-display" style="flex:1;font-family:'Courier Prime',monospace;font-size:1.1rem;color:var(--gold3);letter-spacing:.08em;font-weight:700;"></div>
+        <button onclick="copyCode()" style="padding:.4rem .75rem;background:rgba(0,184,169,.12);border:1px solid rgba(0,184,169,.25);border-radius:3px;color:var(--teal);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;transition:all .2s;" id="copy-btn">Copy</button>
+      </div>
+    </div>
+    <button class="board-btn" id="join-btn" onclick="joinGame()">💎 Enter the Vault</button>
+    <div class="fbstat" id="fbstat"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 0 — BRIEFING
+══════════════════════════════════════ -->
+<div id="ch0" class="chapter screen">
+  <div class="scene bg-night">
+    <div class="scene-bg">
+      <div class="city-lights" id="city0"></div>
+      <div class="rain-layer" id="rain0"></div>
+    </div>
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">00</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Welcome Chamber · Day One · Your Induction Begins</div>
+      <span class="scene-emoji">💎</span>
+      <div class="scene-title">The Golden Vault Awaits</div>
+      <div class="scene-sub">Six chambers. Six secrets. One true Tanishq insider.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip0"></div>
+  <div class="story-body">
+    <p>Welcome to <strong>Tanishq</strong> — India's most trusted and beloved jewellery brand, part of the <strong>Titan Company</strong> and the legendary <strong>TATA Group</strong>.</p>
+    <p>Before you can call yourself a true Tanishq insider, you must unlock the <strong>Golden Vault</strong> — six chambers, each sealed with a question that tests your knowledge of our brand, our values, and our world.</p>
+    <div class="pull-quote">"Xerxes! There's a very big market in India for jewellery. Given our technical skills and reputation, we should be able to do well. It's your decision that is final."<cite>— J.R.D. Tata, on the birth of Tanishq</cite></div>
+    <p>Six chambers. Six layers of the Tanishq story. Prove you know your organisation — and the vault is yours.</p>
+  </div>
+  <div class="dialogue-wrap">
+    <div class="bubble intercom"><span class="bubble-label">🎙 Vault Keeper</span>"Welcome, new team member. Behind these six chambers lies the full story of Tanishq — its heritage, values, supply chain, and brand promises. Unlock them all and you earn your place as a true insider. Chamber One awaits."</div>
+  </div>
+  <div class="illus"><div class="illus-big">💍</div><div class="illus-cap">Every piece of Tanishq jewellery carries a story. So do you.</div></div>
+  <div class="ch-footer"><button class="cont-btn" onclick="goChapter(1)">Enter Chamber One <span class="arr">→</span></button></div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 1 — FIRST IMPRESSION
+══════════════════════════════════════ -->
+<div id="ch1" class="chapter screen">
+  <div class="scene bg-office">
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">01</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Chamber One · The TATA Legacy Room</div>
+      <span class="scene-emoji">🏛️</span>
+      <div class="scene-title">The House of TATA</div>
+      <div class="scene-sub">Every Tanishq piece carries the trust of a 150-year-old legacy.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip1"></div>
+  <div class="story-body">
+    <p>The first chamber is lined with portraits and headlines spanning over a century. At its centre stands a brass plaque: <strong>"Founded by Jamshedji Nusserwanji Tata. Headquartered at Bombay House."</strong></p>
+    <p>TATA Group is one of India's most respected conglomerates — spanning <strong>30 listed companies</strong>, <strong>10 verticals</strong>, operating in <strong>100+ countries</strong> across <strong>6 continents</strong>. Every Tanishq associate is part of this extraordinary legacy.</p>
+    <p>The <strong>Tata Code of Conduct (TCOC)</strong> — a set of ethical principles — governs every Tata company, including Tanishq. It is the foundation of the trust customers place in us.</p>
+  </div>
+  <div class="illus"><div class="illus-big">🏛️</div><div class="illus-cap">Bombay House — Headquarters of the TATA Group since 1924.</div></div>
+  <div class="puzzle-wrap">
+    <div class="pcard">
+      <div class="pcard-hdr"><span class="pcard-ico">🔍</span><div class="pcard-lbl">Chamber 1 · Unlock the TATA Legacy</div></div>
+      <div class="pcard-body">
+        <div class="p-q">Who founded the TATA Group and where is its headquarters located?</div>
+        <div class="opts" id="q_c1_opts">
+          <button class="opt" onclick="answerQ('c1',0)"><span class="oletter">A</span>Ratan Tata — headquartered at Tata House, Mumbai</button>
+          <button class="opt" onclick="answerQ('c1',1)"><span class="oletter">B</span>Jamshedji Nusserwanji Tata — headquartered at Bombay House</button>
+          <button class="opt" onclick="answerQ('c1',2)"><span class="oletter">C</span>J.R.D. Tata — headquartered at Jamshedpur</button>
+        </div>
+        <div class="feedback" id="q_c1_fb"></div>
+        <button class="nxt-btn" id="q_c1_next" onclick="goChapter(2)">Enter Chamber Two →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 2 — AFFINITY
+══════════════════════════════════════ -->
+<div id="ch2" class="chapter screen">
+  <div class="scene bg-mirror">
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">02</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Chamber Two · The Founders Gallery</div>
+      <span class="scene-emoji">✨</span>
+      <div class="scene-title">The Birth of Tanishq</div>
+      <div class="scene-sub">A name, a vision, and a jeweller who changed India forever.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip2"></div>
+  <div class="story-body">
+    <p>The second chamber is the <strong>Founders Gallery</strong> — a warm room lined with the story of how Tanishq came to be.</p>
+    <p>The name <strong>Tanishq</strong> was coined by <strong>Mr. Xerxes Desai</strong> — Founder — by marrying two words: <em>"Tan"</em> (body) and <em>"Nishk"</em> (a gold ornament). Another reading: <em>"Ta"</em> for Tata and <em>"Nishq"</em> for gold coin.</p>
+    <p>What began as a venture into <strong>18K gold watches studded with precious stones</strong> grew into India's largest jewellery brand — a 22K gold jeweller who understood the evolving needs of the Indian woman.</p>
+  </div>
+  <div class="dialogue-wrap">
+    <div class="bubble you"><span class="bubble-label">🎙 Mr. Xerxes Desai</span>"Tanishq is a name synonymous with superior craftsmanship, exclusive designs, and superlative product quality."</div>
+    <div class="bubble narrator"><span class="bubble-label">🎙 Vault Keeper</span>Today, Tanishq has 520+ boutiques, 2 manufacturing plants, and 8,000+ artisans crafting every piece with pride.</div>
+  </div>
+  <div class="puzzle-wrap">
+    <div class="pcard">
+      <div class="pcard-hdr"><span class="pcard-ico">✨</span><div class="pcard-lbl">Chamber 2 · The Founding Story</div></div>
+      <div class="pcard-body">
+        <div class="p-q">What does the name "Tanishq" mean? Choose the most complete answer.</div>
+        <div class="opts" id="q_c2_opts">
+          <button class="opt" onclick="answerQ('c2',0)"><span class="oletter">A</span>A Sanskrit word meaning "precious gemstone"</button>
+          <button class="opt" onclick="answerQ('c2',1)"><span class="oletter">B</span>"Tan" (body) + "Nishk" (gold ornament), also read as "Ta" (Tata) + "Nishq" (gold coin)</button>
+          <button class="opt" onclick="answerQ('c2',2)"><span class="oletter">C</span>Named after the town of Tanishk in Rajasthan, famous for gold craftsmanship</button>
+        </div>
+        <div class="feedback" id="q_c2_fb"></div>
+        <button class="nxt-btn" id="q_c2_next" onclick="goChapter(3)">Enter Chamber Three →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 3 — WORD SEARCH
+══════════════════════════════════════ -->
+<div id="ch3" class="chapter screen">
+  <div class="scene bg-archive">
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">03</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Chamber Three · The Supply Chain Vault</div>
+      <span class="scene-emoji">🏭</span>
+      <div class="scene-title">From Mine to Boutique</div>
+      <div class="scene-sub">Gold. Diamonds. Gemstones. 520+ boutiques. One seamless chain.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip3"></div>
+  <div class="story-body">
+    <p>This chamber reveals the full end-to-end journey of every Tanishq piece — from raw material to the customer's hands.</p>
+    <div class="pull-quote">"70 Vendors → Gold · Diamonds · Gemstones → 2 Factories → 6 Fulfilment Centres → 520+ Boutiques → Customers"<cite>— Tanishq End-to-End Supply Chain</cite></div>
+    <p>Scattered manufacturing hubs in Jaipur and Ahmedabad bring region-specific craft skills. Studded jewellery is manufactured <strong>mostly in-house</strong>; plain gold jewellery is <strong>mostly outsourced</strong> to 70 trusted vendor partners.</p>
+  </div>
+  <div class="illus"><div class="illus-big">⛓️</div><div class="illus-cap">Six steps. One unbroken chain. Can you put them in order?</div></div>
+  <div class="puzzle-wrap">
+    <div class="pcard">
+      <div class="pcard-hdr"><span class="pcard-ico">🔢</span><div class="pcard-lbl">Chamber 3 · Sequence the Supply Chain — Click steps in the correct order</div></div>
+      <div class="pcard-body">
+        <p class="seq-intro">The steps of Tanishq's supply chain have been <strong>shuffled</strong>. Click them in the correct order — from raw material all the way to the customer. Each correct click locks it in! ✅</p>
+        <div class="seq-hint">💡 Hint: Think about where a gold ring begins its life and ends up.</div>
+        <div class="seq-slot-row" id="seq-slots"></div>
+        <div class="seq-grid" id="seq-grid"></div>
+        <div class="seq-progress" id="seq-progress"></div>
+        <div class="feedback" id="seq-fb" style="margin-top:.75rem"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 4 — THREE TESTIMONIES
+══════════════════════════════════════ -->
+<div id="ch4" class="chapter screen">
+  <div class="scene bg-witness">
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">04</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Chamber Four · The Brand Promise Room</div>
+      <span class="scene-emoji">🏅</span>
+      <div class="scene-title">The Promise Vault</div>
+      <div class="scene-sub">Three sealed cases. Three promises Tanishq keeps to every customer.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip4"></div>
+  <div class="story-body">
+    <p>A polished display counter fills this chamber — three sealed glass cases, each holding a scroll with Tanishq's most important customer promises.</p>
+    <div class="pull-quote">"Tanishq is built on a foundation of transparency, purity, and trust. Every promise we make to a customer is one we keep — without exception."<cite>— Tanishq Brand Values</cite></div>
+    <p>Unlock each case by correctly identifying what Tanishq promises its customers. Three pledges. Three questions. Open them one by one.</p>
+  </div>
+
+  <!-- Promise 1 — Karatmeter / Gold Purity -->
+  <div class="puzzle-wrap">
+    <div class="pcard">
+      <div class="pcard-hdr"><span class="pcard-ico">📋</span><div class="pcard-lbl">Brand Promise 1 · Gold Purity · Case 004-A</div></div>
+      <div class="pcard-body">
+        <div class="p-case">Every Tanishq store has a state-of-the-art device that accurately measures the purity of gold in front of the customer. This makes Tanishq gold "as pure as we say it is."</div>
+        <div class="p-q">What is the name of the device present in every Tanishq store to verify gold purity?</div>
+        <div class="opts" id="q_t1_opts">
+          <button class="opt" onclick="answerQ('t1',0)"><span class="oletter">A</span>GoldScan Pro</button>
+          <button class="opt" onclick="answerQ('t1',1)"><span class="oletter">B</span>Karatmeter</button>
+          <button class="opt" onclick="answerQ('t1',2)"><span class="oletter">C</span>PurityCheck 3000</button>
+        </div>
+        <div class="feedback" id="q_t1_fb"></div>
+        <button class="nxt-btn" id="q_t1_next" onclick="showReveal('r_t2')">Open Next Case →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" id="r_t2">
+    <div class="ch-divider"><div class="ch-divider-line"></div><div class="ch-divider-gem">◆</div><div class="ch-divider-line"></div></div>
+    <div class="puzzle-wrap">
+      <div class="pcard">
+        <div class="pcard-hdr"><span class="pcard-ico">📋</span><div class="pcard-lbl">Brand Promise 2 · Diamond Exchange · Case 004-B</div></div>
+        <div class="pcard-body">
+          <div class="p-case">All Tanishq precious stones are carefully selected for best-in-class quality. Tanishq offers a special exchange guarantee on them at current prices, making it India's leading diamond jeweller.</div>
+          <div class="p-q">What exchange guarantee does Tanishq offer on its precious stones?</div>
+          <div class="opts" id="q_t2_opts">
+            <button class="opt" onclick="answerQ('t2',0)"><span class="oletter">A</span>100% exchange at current prices (T&C apply)</button>
+            <button class="opt" onclick="answerQ('t2',1)"><span class="oletter">B</span>50% exchange at purchase price</button>
+            <button class="opt" onclick="answerQ('t2',2)"><span class="oletter">C</span>Exchange only within 1 year of purchase</button>
+          </div>
+          <div class="feedback" id="q_t2_fb"></div>
+          <button class="nxt-btn" id="q_t2_next" onclick="showReveal('r_t3')">Open Final Case →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" id="r_t3">
+    <div class="ch-divider"><div class="ch-divider-line"></div><div class="ch-divider-gem">◆</div><div class="ch-divider-line"></div></div>
+    <div class="puzzle-wrap">
+      <div class="pcard">
+        <div class="pcard-hdr"><span class="pcard-ico">📋</span><div class="pcard-lbl">Brand Promise 3 · Old Gold Exchange · Case 004-C</div></div>
+        <div class="pcard-body">
+          <div class="p-case">When a customer brings old gold to exchange at Tanishq, the process is done completely in the open — the gold is melted and weighed in the customer's presence.</div>
+          <div class="p-q">Why does Tanishq melt old gold in front of the customer during exchange?</div>
+          <div class="opts" id="q_t3_opts">
+            <button class="opt" onclick="answerQ('t3',0)"><span class="oletter">A</span>To speed up the process and serve more customers</button>
+            <button class="opt" onclick="answerQ('t3',1)"><span class="oletter">B</span>It is a traditional ritual required by BIS regulations</button>
+            <button class="opt" onclick="answerQ('t3',2)"><span class="oletter">C</span>To ensure complete transparency — so weight and karatage are always right and the customer gets the best exchange value</button>
+          </div>
+          <div class="feedback" id="q_t3_fb"></div>
+          <button class="nxt-btn" id="q_t3_next" onclick="goChapter(5)">Enter Chamber Five →</button>
+        </div>
+      </div>
+    </div>
+    <div class="illus" style="margin-top:.5rem"><div class="illus-big">💛</div><div class="illus-cap">Transparency is not a policy at Tanishq. It is a promise.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   CH 5 — FILL IN THE BLANK
+══════════════════════════════════════ -->
+<div id="ch5" class="chapter screen">
+  <div class="scene bg-decode">
+    <div class="scene-vignette"></div>
+    <div class="scene-bignum">05</div>
+    <div class="scene-rule"></div>
+    <div class="scene-content">
+      <div class="scene-tag">Chamber Five · The Inner Sanctum · Final Chamber</div>
+      <span class="scene-emoji">🧩</span>
+      <div class="scene-title">The Vision &amp; Mission Scrolls</div>
+      <div class="scene-sub">Three scrolls. Critical words erased. Restore them to unlock the Vault.</div>
+    </div>
+  </div>
+  <div class="ch-strip" id="strip5"></div>
+  <div class="story-body">
+    <p>The final chamber — the inner sanctum of the Golden Vault. Three scrolls are pinned to the wall, each with a key word blacked out. Restore all three to prove you truly know your store, your brand, and your organisation.</p>
+    <p><strong>Complete all three. Unlock the vault. Become a true Tanishq insider.</strong></p>
+  </div>
+
+  <!-- FITB 1 — Vision -->
+  <div class="puzzle-wrap">
+    <div class="pcard">
+      <div class="pcard-hdr"><span class="pcard-ico">✏️</span><div class="pcard-lbl">Scroll 1 of 3 · Tanishq Vision</div></div>
+      <div class="pcard-body">
+        <div class="p-fitb">Tanishq's Vision is: "To be the most <span class="blank" id="b1">_________</span> jewellery brand for Indian women."</div>
+        <div class="p-hint">💡 Hint: This word means something that people strongly want to have or achieve — aspirational and covetable.</div>
+        <div class="opts" id="q_f1_opts">
+          <button class="opt" onclick="answerFitb('f1',0,'Desirable')"><span class="oletter">A</span>Desirable</button>
+          <button class="opt" onclick="answerFitb('f1',1,'Affordable')"><span class="oletter">B</span>Affordable</button>
+          <button class="opt" onclick="answerFitb('f1',2,'Profitable')"><span class="oletter">C</span>Profitable</button>
+        </div>
+        <div class="feedback" id="q_f1_fb"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FITB 2 (locked) — Mission -->
+  <div id="fw2" style="margin-top:1rem;opacity:.28;pointer-events:none;transition:opacity .6s,transform .6s;transform:translateY(10px)">
+    <div class="puzzle-wrap">
+      <div class="pcard">
+        <div class="pcard-hdr"><span class="pcard-ico">✏️</span><div class="pcard-lbl">Scroll 2 of 3 · Tanishq Mission</div></div>
+        <div class="pcard-body">
+          <div class="p-fitb">Tanishq's Mission: "We will continuously create wealth for all our stakeholders, by transforming the jewellery business and by being the gold standard in design, shopping experience and <span class="blank" id="b2">_________</span> practices."</div>
+          <div class="p-hint">💡 Hint: A word that describes honesty, fairness, and doing the right thing — central to TATA's Code of Conduct.</div>
+          <div class="opts" id="q_f2_opts">
+            <button class="opt" onclick="answerFitb('f2',0,'Ethical')"><span class="oletter">A</span>Ethical</button>
+            <button class="opt" onclick="answerFitb('f2',1,'Profitable')"><span class="oletter">B</span>Profitable</button>
+            <button class="opt" onclick="answerFitb('f2',2,'Digital')"><span class="oletter">C</span>Digital</button>
+          </div>
+          <div class="feedback" id="q_f2_fb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FITB 3 (locked) — GoldenHarvest / Customer Scheme -->
+  <div id="fw3" style="margin-top:1rem;opacity:.28;pointer-events:none;transition:opacity .6s,transform .6s;transform:translateY(10px)">
+    <div class="puzzle-wrap">
+      <div class="pcard">
+        <div class="pcard-hdr"><span class="pcard-ico">✏️</span><div class="pcard-lbl">Scroll 3 of 3 · Golden Harvest Scheme · Final Unlock</div></div>
+        <div class="pcard-body">
+          <div class="p-fitb">Through Tanishq's <span class="blank" id="b3">_________</span> scheme, customers can accumulate lump sums over many months and buy the jewellery they always wanted — while never worrying about the gold price going up.</div>
+          <div class="p-hint">💡 Hint: It's named after a farming concept — saving steadily over time to reap a rich reward at harvest time. Two words.</div>
+          <div class="opts" id="q_f3_opts">
+            <button class="opt" onclick="answerFitb('f3',0,'Golden Harvest')"><span class="oletter">A</span>Golden Harvest</button>
+            <button class="opt" onclick="answerFitb('f3',1,'Gold Savings')"><span class="oletter">B</span>Gold Savings</button>
+            <button class="opt" onclick="answerFitb('f3',2,'Jewel Plan')"><span class="oletter">C</span>Jewel Plan</button>
+          </div>
+          <div class="feedback" id="q_f3_fb"></div>
+          <button class="nxt-btn" id="q_f3_next" onclick="finishGame()">💎 Unlock the Golden Vault!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   COMPLETE SCREEN
+══════════════════════════════════════ -->
+<div id="complete-screen" class="screen">
+  <div class="comp-card">
+    <div class="comp-ornament">◆ &nbsp; Vault Unlocked · Welcome to Tanishq &nbsp; ◆</div>
+    <span class="comp-trophy">🏆</span>
+    <div class="comp-title">Welcome, Tanishq Insider! 💎</div>
+    <p style="font-size:.84rem;color:var(--muted);margin-bottom:.4rem;font-style:italic;">The Golden Vault is open. All six chambers unlocked. You truly know your organisation.</p>
+    <div class="comp-div"></div>
+    <div class="comp-time" id="finish-time">00:00</div>
+    <div class="comp-rank" id="finish-rank"></div>
+
+    <!-- SCORING BREAKDOWN -->
+    <div class="score-card">
+      <div class="score-card-title">🏆 Your Score</div>
+      <div id="score-breakdown"></div>
+    </div>
+
+    <div class="findings">
+      <div class="findings-title">💎 Your Tanishq Insider Knowledge — Key Takeaways</div>
+      <div class="finding"><span class="finding-dot">◆</span>TATA Group was founded by Jamshedji Nusserwanji Tata — headquartered at Bombay House, spanning 30 listed companies in 100+ countries across 6 continents.</div>
+      <div class="finding"><span class="finding-dot">◆</span>Tanishq was coined by Mr. Xerxes Desai: "Tan" (body) + "Nishk" (gold ornament). Also read as "Ta" (Tata) + "Nishq" (gold coin).</div>
+      <div class="finding"><span class="finding-dot">◆</span>Tanishq's supply chain: 70 Vendors → 2 Factories → 6 Fulfilment Centres → 520+ Boutiques → Customers, supported by 8,000+ artisans.</div>
+      <div class="finding"><span class="finding-dot">◆</span>The Karatmeter in every store verifies gold purity. Tanishq offers 100% exchange on precious stones and full transparency in the old gold exchange process.</div>
+      <div class="finding"><span class="finding-dot">◆</span>Tanishq's Vision: "To be the most Desirable jewellery brand for Indian women." Mission: Creating wealth while upholding ethical practices.</div>
+      <div class="finding"><span class="finding-dot">◆</span>The Golden Harvest scheme lets customers save monthly and purchase dream jewellery — one of Tanishq's most trusted customer loyalty programmes.</div>
+    </div>
+    <button class="board-again" onclick="location.reload()">💎 Play Again</button>
+    <!-- Inline leaderboard on complete screen -->
+    <div id="comp-lb" style="margin-top:1.5rem;text-align:left;">
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.7rem;">🏆 Final Leaderboard</div>
+      <div id="comp-lb-list" style="display:flex;flex-direction:column;gap:.5rem;">
+        <div style="font-size:.75rem;color:var(--muted);font-style:italic;">Loading results…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /story -->
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<div class="sidebar">
+  <div>
+    <div class="lb-head">
+      <div class="lb-title">🏆 Leaderboard</div>
+      <div class="lb-live">● LIVE</div>
+    </div>
+    <div class="lb-list" id="lblist">
+      <div class="lb-empty">No one has unlocked the Vault yet.<br/>Be the first!</div>
+    </div>
+  </div>
+  <div class="sb-div"></div>
+  <div class="tmap">
+    <div class="tmap-title">💎 Vault Progress</div>
+    <div class="tmap-stops" id="tmap"></div>
+  </div>
+  <div class="sb-div"></div>
+  <div class="abox">
+    <div class="abox-title">👥 Team Members</div>
+    <div id="alist"><span style="font-size:.7rem;color:rgba(86,80,80,.6)">Waiting for team…</span></div>
+  </div>
+</div>
+</div><!-- /layout -->
+
+<script>
+/* ════════════════════════════════════════════
+   FIREBASE REST — set YOUR_PROJECT to enable multiplayer
+════════════════════════════════════════════ */
+var FB="https://YOUR_PROJECT-default-rtdb.firebaseio.com";
+function fbGet(p){return fetch(FB+p+".json").then(function(r){return r.json();});}
+function fbPut(p,d){return fetch(FB+p+".json",{method:"PUT",body:JSON.stringify(d)}).then(function(r){return r.json();});}
+function fbPatch(p,d){return fetch(FB+p+".json",{method:"PATCH",body:JSON.stringify(d)}).then(function(r){return r.json();});}
+function fbPoll(p,cb,ms){fbGet(p).then(cb);return setInterval(function(){fbGet(p).then(cb);},ms||4500);}
+
+/* ════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════ */
+var S={
+  name:"",code:"",pid:"inv"+Date.now().toString(36),
+  startTime:null,ch:0,done:{},
+  timerInt:null,pollLB:null,pollP:null,
+  finished:false,demo:false,
+  score:0,correctFirst:0,wrongAttempts:0
+};
+var TOTAL=6;
+var STOPS=["Welcome Chamber · Briefing","Chamber 1 · The TATA Legacy","Chamber 2 · Birth of Tanishq","Chamber 3 · The Supply Chain","Chamber 4 · Brand Promises","Chamber 5 · Know Your Store","🏁 Vault Unlocked!"];
+
+/* ════════════════════════════════════════════
+   AMBIENT INIT
+════════════════════════════════════════════ */
+// Curtain out
+setTimeout(function(){document.getElementById("curtain").classList.add("out");},2900);
+
+// Stars
+(function(){
+  var s=document.getElementById("ambient");
+  for(var i=0;i<110;i++){
+    var el=document.createElement("div");el.className="star";
+    var sz=.6+Math.random()*2.5;
+    el.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+(Math.random()*100)+"%;top:"+(Math.random()*82)+"%;animation-duration:"+(1.5+Math.random()*4)+"s;animation-delay:"+(Math.random()*7)+"s;";
+    s.appendChild(el);
+  }
+  // Ambient light sparkles
+  for(var j=0;j<8;j++){
+    var ln=document.createElement("div");ln.className="streak";
+    var w=60+Math.random()*200;
+    ln.style.cssText="width:"+w+"px;top:"+(15+Math.random()*65)+"%;animation-duration:"+(3+Math.random()*6)+"s;animation-delay:"+(Math.random()*8)+"s;";
+    s.appendChild(ln);
+  }
+})();
+
+// Smoke puffs
+(function(){
+  var t=document.getElementById("tracks");
+  function addPuff(){
+    var el=document.createElement("div");el.className="puff";
+    var sz=15+Math.random()*25;
+    el.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+(5+Math.random()*15)+"%;bottom:60px;animation-duration:"+(3+Math.random()*3)+"s;animation-delay:0s;";
+    t.appendChild(el);
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},6000);
+  }
+  setInterval(addPuff,1400);
+})();
+
+// City lights for ch0
+function buildCityLights(containerId){
+  var c=document.getElementById(containerId);
+  if(!c)return;
+  for(var i=0;i<60;i++){
+    var el=document.createElement("div");el.className="light-dot";
+    var sz=1+Math.random()*3;
+    var col=Math.random()>.5?"rgba(255,220,150,":"rgba(150,200,255,";
+    el.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+(Math.random()*100)+"%;top:"+(20+Math.random()*70)+"%;background:"+col+(0.4+Math.random()*.5)+");animation-duration:"+(0.8+Math.random()*2)+"s;animation-delay:"+(Math.random()*3)+"s;";
+    c.appendChild(el);
+  }
+}
+
+// Rain drops
+function buildRain(containerId){
+  var c=document.getElementById(containerId);
+  if(!c)return;
+  for(var i=0;i<30;i++){
+    var el=document.createElement("div");el.className="rain-drop";
+    var h=30+Math.random()*80;
+    el.style.cssText="width:1px;height:"+h+"px;left:"+(Math.random()*100)+"%;top:0;animation-duration:"+(0.6+Math.random()*.8)+"s;animation-delay:"+(Math.random()*2)+"s;";
+    c.appendChild(el);
+  }
+}
+
+/* Build vault progress map */
+function buildTrainMap(){
+  var c=document.getElementById("tmap");c.innerHTML="";
+  STOPS.forEach(function(lbl,i){
+    var div=document.createElement("div");div.className="ts";div.id="ts"+i;
+    div.innerHTML='<div class="ts-node">○</div><div class="ts-lbl">'+lbl+'</div>';
+    c.appendChild(div);
+  });
+}
+
+/* ════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════ */
+function fmt(sec){return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");}
+function elapsed(){return Math.floor((Date.now()-S.startTime)/1000);}
+
+function toast(msg,type){
+  var tc=document.getElementById("toasts"),t=document.createElement("div");
+  t.className="toast "+(type||"info");t.textContent=msg;tc.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},4500);
+}
+
+function showScreen(id){
+  var all=["join-screen","ch0","ch1","ch2","ch3","ch4","ch5","complete-screen"];
+  all.forEach(function(s){
+    var el=document.getElementById(s);if(!el)return;
+    el.style.display="none";el.classList.remove("active","vis");
+  });
+  var el=document.getElementById(id);if(!el)return;
+  el.style.display=(id==="complete-screen")?"flex":"block";
+  el.classList.add("active");
+  setTimeout(function(){el.classList.add("vis");},40);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ════════════════════════════════════════════
+   SOUND ENGINE — WEB AUDIO API
+   Rich Tanishq brand sounds
+════════════════════════════════════════════ */
+var AC=null;
+function initAudio(){
+  if(!AC)try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}
+  if(AC&&AC.state==="suspended")AC.resume();
+}
+
+/* Soft gold click — button tap */
+function playClick(){
+  initAudio();if(!AC)return;
+  var o=AC.createOscillator(),g=AC.createGain(),f=AC.createBiquadFilter();
+  f.type="lowpass";f.frequency.value=1800;
+  o.connect(f);f.connect(g);g.connect(AC.destination);
+  o.type="sine";o.frequency.value=660;
+  g.gain.setValueAtTime(.09,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.12);
+  o.start();o.stop(AC.currentTime+.12);
+}
+
+/* Wrong answer — low dull thud */
+function playWrong(){
+  initAudio();if(!AC)return;
+  var o=AC.createOscillator(),g=AC.createGain();
+  o.connect(g);g.connect(AC.destination);
+  o.type="sawtooth";
+  o.frequency.setValueAtTime(180,AC.currentTime);
+  o.frequency.exponentialRampToValueAtTime(80,AC.currentTime+.18);
+  g.gain.setValueAtTime(.12,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.22);
+  o.start();o.stop(AC.currentTime+.22);
+}
+
+/* Correct answer — jewel chime ascending */
+function playCorrect(){
+  initAudio();if(!AC)return;
+  var notes=[523,659,784,1047];
+  notes.forEach(function(freq,i){
+    var o=AC.createOscillator(),g=AC.createGain(),rev=AC.createGain();
+    o.connect(g);g.connect(rev);rev.connect(AC.destination);
+    o.type="triangle";o.frequency.value=freq;
+    var t=AC.currentTime+i*.08;
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.11,t+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.35);
+    o.start(t);o.stop(t+.38);
+  });
+}
+
+/* Chapter unlock — grand vault chord */
+function playUnlock(){
+  initAudio();if(!AC)return;
+  var chord=[261,329,392,523,659];
+  chord.forEach(function(freq,i){
+    var o=AC.createOscillator(),g=AC.createGain();
+    o.connect(g);g.connect(AC.destination);
+    o.type="sine";o.frequency.value=freq;
+    var t=AC.currentTime+i*.04;
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.08,t+.06);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.7);
+    o.start(t);o.stop(t+.75);
+  });
+}
+
+/* Sequence correct step — soft bell ping */
+function playPing(){
+  initAudio();if(!AC)return;
+  var o=AC.createOscillator(),g=AC.createGain();
+  o.connect(g);g.connect(AC.destination);
+  o.type="sine";o.frequency.value=1200+Math.random()*200;
+  g.gain.setValueAtTime(.08,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.28);
+  o.start();o.stop(AC.currentTime+.3);
+}
+
+/* Vault complete — triumphant fanfare */
+function playSuccess(){
+  initAudio();if(!AC)return;
+  playUnlock();
+  setTimeout(function(){
+    var fanfare=[523,659,784,659,784,1047];
+    fanfare.forEach(function(f,i){
+      var o=AC.createOscillator(),g=AC.createGain();
+      o.connect(g);g.connect(AC.destination);
+      o.type="triangle";o.frequency.value=f;
+      var t=AC.currentTime+.4+i*.09;
+      g.gain.setValueAtTime(.0001,t);
+      g.gain.linearRampToValueAtTime(.1,t+.03);
+      g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+      o.start(t);o.stop(t+.25);
+    });
+  },200);
+}
+
+/* ════════════════════════════════════════════
+   CHAPTER STRIP PIPS
+════════════════════════════════════════════ */
+function renderStrip(chId){
+  var el=document.getElementById("strip"+chId);if(!el)return;
+  var html="";
+  for(var i=0;i<=TOTAL;i++){
+    var c="pip";
+    if(i<chId)c+=" done";
+    else if(i===chId)c+=" curr";
+    html+='<div class="'+c+'"></div>';
+  }
+  html+='<div class="strip-lbl">CHAMBER '+(chId)+' / '+TOTAL+'</div>';
+  el.innerHTML=html;
+}
+
+/* VAULT PROGRESS MAP */
+function updateMap(current){
+  for(var i=0;i<=TOTAL;i++){
+    var el=document.getElementById("ts"+i);if(!el)continue;
+    el.className="ts";
+    var node=el.querySelector(".ts-node");
+    if(i<current){el.classList.add("done");if(node)node.textContent="✓";}
+    else if(i===current){el.classList.add("curr");if(node)node.textContent="●";}
+    else{if(node)node.textContent="○";}
+  }
+}
+
+/* HEADER VAULT PROGRESS */
+function updateTrainProg(n){
+  var pct=Math.round(n/TOTAL*100);
+  document.getElementById("train-prog").style.width=pct+"%";
+  document.getElementById("train-loco").style.left=pct+"%";
+}
+
+/* ════════════════════════════════════════════
+   CODE GENERATOR
+════════════════════════════════════════════ */
+function generateCode(){
+  var w=["TANISHQ","TATA","TITAN","VAULT","GOLD","KARIGAR","DIAMOND","ARTISAN","BOUTIQUE","HOSUR","JEWEL","TRUST"];
+  var code=w[Math.floor(Math.random()*w.length)]+"-"+Math.floor(1000+Math.random()*9000);
+  document.getElementById("inp-code").value=code;
+  var sp=document.getElementById("share-panel");
+  if(sp){sp.style.display="block";document.getElementById("share-code-display").textContent=code;}
+}
+function copyCode(){
+  var code=document.getElementById("inp-code").value.trim();
+  if(!code)return;
+  var btn=document.getElementById("copy-btn");
+  try{
+    navigator.clipboard.writeText(code).then(function(){
+      btn.textContent="✓ Copied!";btn.style.color="#4ade80";
+      setTimeout(function(){btn.textContent="Copy";btn.style.color="";},2000);
+    });
+  }catch(e){
+    var ta=document.createElement("textarea");ta.value=code;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);
+    btn.textContent="✓ Copied!";btn.style.color="#4ade80";
+    setTimeout(function(){btn.textContent="Copy";btn.style.color="";},2000);
+  }
+}
+
+/* ════════════════════════════════════════════
+   JOIN
+════════════════════════════════════════════ */
+function joinGame(){
+  playClick();
+  var name=document.getElementById("inp-name").value.trim();
+  var code=document.getElementById("inp-code").value.trim().toUpperCase();
+  var stat=document.getElementById("fbstat");
+  if(!name){toast("⚠️ Enter your investigator name","error");return;}
+  if(!code){toast("⚠️ Enter or generate a mission code","error");return;}
+  S.name=name;S.code=code;
+  if(FB.indexOf("YOUR_PROJECT")>-1){
+    S.demo=true;
+    stat.textContent="⚡ Demo mode — add your Firebase URL for multiplayer";
+    startSession();return;
+  }
+  var btn=document.getElementById("join-btn");
+  btn.disabled=true;btn.textContent="Entering…";
+  stat.textContent="Connecting…";stat.className="fbstat";
+  fbPut("rooms/"+code+"/players/"+S.pid,{name:name,ch:0,joined:Date.now()})
+    .then(function(){
+      stat.textContent="✓ Mission joined";stat.className="fbstat ok";
+      S.pollLB=fbPoll("rooms/"+code+"/leaderboard",renderLB,4500);
+      S.pollP=fbPoll("rooms/"+code+"/players",renderPlayers,5500);
+      startSession();
+    }).catch(function(){
+      btn.disabled=false;btn.textContent="💎 Enter the Vault";
+      S.demo=true;stat.textContent="Firebase error — demo mode";stat.className="fbstat err";
+      startSession();
+    });
+}
+
+function startSession(){
+  document.getElementById("badge-name").textContent=S.name+(S.demo?" (demo)":"");
+  var sb=document.getElementById("score-badge");if(sb)sb.style.display="flex";
+  updateScoreDisplay();
+  buildSequencePuzzle();buildCityLights("city0");buildRain("rain0");
+  buildTrainMap();
+  showScreen("ch0");
+  renderStrip(0);updateMap(0);updateTrainProg(0);
+  startTimer();
+  toast("💎 Welcome, "+S.name+"! Six chambers await. Unlock the Golden Vault!","success");
+}
+
+/* ════════════════════════════════════════════
+   TIMER
+════════════════════════════════════════════ */
+function startTimer(){
+  S.startTime=Date.now();
+  S.timerInt=setInterval(function(){
+    var e=elapsed(),el=document.getElementById("gtimer");
+    el.textContent="⏱ "+fmt(e);
+    el.className=e>600?"danger":e>300?"warn":"";
+  },1000);
+}
+
+/* ════════════════════════════════════════════
+   CHAPTER NAV
+════════════════════════════════════════════ */
+function goChapter(n){
+  playClick();S.ch=n;
+  renderStrip(n);updateMap(n);updateTrainProg(n);
+  showScreen("ch"+n);
+  if(!S.demo) fbPatch("rooms/"+S.code+"/players/"+S.pid,{ch:n});
+  toast("💎 Entering Chamber "+n+"…","info");
+}
+
+/* ════════════════════════════════════════════
+   QUIZ DATA
+════════════════════════════════════════════ */
+var QD={
+  c1:{a:1,ex:"✅ Correct! TATA Group was founded by Jamshedji Nusserwanji Tata and is headquartered at the iconic Bombay House in Mumbai. With 30 listed companies across 10 verticals, operating in 100+ countries on 6 continents, TATA is one of the world's most respected business houses."},
+  c2:{a:1,ex:"✅ Exactly right! 'Tan' means body and 'Nishk' means a gold ornament in Sanskrit. Alternatively, 'Ta' stands for Tata and 'Nishq' for gold coin. The name was coined by Mr. Xerxes Desai, the founder of Tanishq, making it a name synonymous with trust and craftsmanship."},
+  t1:{a:1,ex:"✅ The Karatmeter! This state-of-the-art device is present in every Tanishq store and accurately measures the purity of gold. It's one of Tanishq's most powerful trust-building tools — our gold is as pure as we say it is."},
+  t2:{a:0,ex:"✅ 100% exchange at current prices (T&C apply)! Tanishq carefully selects all precious stones for best-in-class quality and backs this with a 100% exchange guarantee. This is why Tanishq is India's leading diamond jeweller."},
+  t3:{a:2,ex:"✅ Complete transparency! By melting old gold in the customer's presence and weighing it openly, Tanishq ensures the weight and karatage are always right. The customer gets the best exchange value — and witnesses every step. Transparency is a Tanishq promise, not just a policy."}
+};
+
+function answerQ(qid,idx){
+  playClick();
+  if(S.done[qid])return;
+  var data=QD[qid];
+  var ok=(idx===data.a);
+  if(!ok){
+    // Wrong — penalise but don't lock out, let them try once more
+    S.wrongAttempts++;
+    var opts=document.querySelectorAll("#q_"+qid+"_opts .opt");
+    opts[idx].classList.add("wrong");opts[idx].disabled=true;
+    playWrong();
+    var fb=document.getElementById("q_"+qid+"_fb");
+    fb.textContent="✗ Not quite — try another answer.";fb.className="feedback show wrong";
+    return;
+  }
+  S.done[qid]=true;
+  S.correctFirst++;
+  // Points: 100 per question, bonus if no wrong attempts on this question
+  var pts=100;
+  S.score+=pts;
+  updateScoreDisplay();
+  var opts=document.querySelectorAll("#q_"+qid+"_opts .opt");
+  for(var i=0;i<opts.length;i++) opts[i].disabled=true;
+  opts[idx].classList.add("correct");
+  var fb=document.getElementById("q_"+qid+"_fb");
+  fb.textContent=data.ex;fb.className="feedback show correct";
+  var nb=document.getElementById("q_"+qid+"_next");
+  if(nb) nb.style.display="inline-flex";
+  fireSuccess();playCorrect();
+  toast("+100 pts 💎","success");
+}
+
+/* ════════════════════════════════════════════
+   FILL-IN-THE-BLANK
+════════════════════════════════════════════ */
+var FD={
+  f1:{a:0,w:"Desirable",   ex:"✅ Desirable! Tanishq's Vision is 'To be the most Desirable jewellery brand for Indian women.' Everything we do — our design, our craftsmanship, our experience — is in service of this single aspiration."},
+  f2:{a:0,w:"Ethical",ex:"✅ Ethical! Tanishq's Mission ends with 'ethical practices' — a direct reflection of the Tata Code of Conduct (TCOC) that governs every Tata company. Ethics is not optional at Tanishq; it is the gold standard we hold ourselves to."},
+  f3:{a:0,w:"Golden Harvest",  ex:"✅ Golden Harvest! Tanishq's Golden Harvest scheme allows customers to save a fixed amount every month and receive a bonus at the end, making their dream jewellery purchase more accessible. It's one of our most popular and trusted customer loyalty initiatives."}
+};
+
+function answerFitb(qid,idx,word){
+  playClick();
+  if(S.done[qid])return;
+  var data=FD[qid];
+  var ok=(idx===data.a);
+  var opts=document.querySelectorAll("#q_"+qid+"_opts .opt");
+  if(!ok){
+    S.wrongAttempts++;
+    opts[idx].classList.add("wrong");opts[idx].disabled=true;
+    playWrong();
+    var fb2=document.getElementById("q_"+qid+"_fb");
+    fb2.textContent="✗ Not quite — try another answer.";fb2.className="feedback show wrong";
+    return;
+  }
+  for(var i=0;i<opts.length;i++) opts[i].disabled=true;
+  opts[idx].classList.add("correct");
+  var fb=document.getElementById("q_"+qid+"_fb");
+  fb.textContent=data.ex;fb.className="feedback show correct";
+  if(ok){
+    S.done[qid]=true;S.score+=100;S.correctFirst++;
+    updateScoreDisplay();
+    fireSuccess();playCorrect();toast("+100 pts 💎","success");
+    var bnum=qid.replace("f","");
+    var bl=document.getElementById("b"+bnum);
+    if(bl){bl.textContent=data.w;bl.classList.add("filled");}
+    // Unlock next
+    var nids={f1:"fw2",f2:"fw3"};
+    var nid=nids[qid];
+    if(nid){
+      var nw=document.getElementById(nid);
+      if(nw){
+        nw.style.opacity="1";nw.style.pointerEvents="auto";nw.style.transform="translateY(0)";
+        setTimeout(function(){nw.scrollIntoView({behavior:"smooth",block:"start"});},350);
+      }
+    }
+    if(qid==="f3"){
+      var nb=document.getElementById("q_f3_next");
+      if(nb) nb.style.display="inline-flex";
+    }
+  }
+}
+
+/* ════════════════════════════════════════════
+   SEQUENTIAL REVEAL
+════════════════════════════════════════════ */
+function showReveal(id){
+  playClick();
+  var el=document.getElementById(id);
+  if(el){
+    el.classList.add("shown");
+    setTimeout(function(){el.scrollIntoView({behavior:"smooth",block:"start"});},130);
+  }
+}
+
+/* ════════════════════════════════════════════
+   SEQUENCE PUZZLE — Supply Chain Ordering
+════════════════════════════════════════════ */
+var SEQ_STEPS=[
+  {id:0,order:1,icon:"⛏️", label:"Raw Materials Procurement",  desc:"Gold, diamonds & gemstones sourced from 70 trusted vendors"},
+  {id:1,order:2,icon:"🏭", label:"Manufacturing at Factories",  desc:"Crafted at Hosur & Pantnagar plants; studded jewellery made in-house"},
+  {id:2,order:3,icon:"🧑‍🎨",label:"Karigar Centres",            desc:"Master artisans add signature hand-crafted finishing touches"},
+  {id:3,order:4,icon:"📦", label:"Fulfilment Centres",          desc:"6 FCs dispatch pieces across India with quality checks"},
+  {id:4,order:5,icon:"💎", label:"Tanishq Boutiques",           desc:"520+ boutiques present jewellery on the showroom floor"},
+  {id:5,order:6,icon:"👩", label:"Customer",                    desc:"The final piece — trusted, certified, and cherished"}
+];
+var seqState={nextExpected:1,correctCount:0,done:false};
+
+function shuffleArray(a){
+  var arr=a.slice();
+  for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}
+  return arr;
+}
+
+function buildSequencePuzzle(){
+  var grid=document.getElementById("seq-grid");
+  var slotRow=document.getElementById("seq-slots");
+  if(!grid||!slotRow)return;
+  seqState={nextExpected:1,correctCount:0,done:false};
+
+  // Build slots (answer positions)
+  slotRow.innerHTML="";
+  for(var i=1;i<=6;i++){
+    var slot=document.createElement("div");
+    slot.className="seq-slot";slot.id="seq-slot-"+i;
+    slot.textContent="Step "+i;
+    slotRow.appendChild(slot);
+  }
+
+  // Build shuffled cards
+  var shuffled=shuffleArray(SEQ_STEPS);
+  grid.innerHTML="";
+  shuffled.forEach(function(step){
+    var card=document.createElement("div");
+    card.className="seq-card";card.id="seq-card-"+step.id;
+    card.setAttribute("data-order",step.order);
+    card.innerHTML='<div class="seq-badge">?</div><div class="seq-icon">'+step.icon+'</div><div class="seq-label"><strong>'+step.label+'</strong><br><span style="font-size:.72rem;opacity:.7;">'+step.desc+'</span></div>';
+    card.onclick=function(){seqCardClick(step.order,step.label,card);};
+    grid.appendChild(card);
+  });
+  document.getElementById("seq-progress").textContent="Click the FIRST step in the supply chain to begin.";
+}
+
+function seqCardClick(order,label,card){
+  if(seqState.done)return;
+  if(card.classList.contains("locked"))return;
+  playClick();
+  if(order===seqState.nextExpected){
+    // CORRECT
+    playPing();
+    S.score+=50;S.correctFirst++;updateScoreDisplay();
+    toast("+50 pts 💎","success");
+    card.classList.add("locked","ok");
+    card.querySelector(".seq-badge").textContent=order;
+    var slot=document.getElementById("seq-slot-"+order);
+    if(slot){slot.textContent=label.split(" ").slice(0,2).join(" ")+"…";slot.classList.add("filled","correct-slot");}
+    seqState.correctCount++;seqState.nextExpected++;
+    fireMiniSuccess();
+    if(seqState.correctCount===6){
+      seqState.done=true;
+      document.getElementById("seq-progress").textContent="";
+      var fb=document.getElementById("seq-fb");
+      fb.textContent="✅ Perfect sequence! You've mapped the full Tanishq supply chain — from raw materials to the customer. Chamber Four is now unlocked!";
+      fb.className="feedback show correct";
+      fireSuccess();playUnlock();
+      setTimeout(function(){goChapter(4);},2200);
+    } else {
+      document.getElementById("seq-progress").textContent="✓ "+seqState.correctCount+" of 6 placed correctly. Now click Step "+seqState.nextExpected+"…";
+    }
+  } else {
+    // WRONG
+    playWrong();S.wrongAttempts++;
+    card.classList.add("locked","err");
+    setTimeout(function(){card.classList.remove("locked","err");},600);
+    document.getElementById("seq-progress").textContent="✗ That's Step "+order+" — but we need Step "+seqState.nextExpected+" next. Try again!";
+  }
+}
+
+function fireMiniSuccess(){
+  var b=document.getElementById("burst");
+  var cols=["#C8922A","#E8B448","#F5D080","#003087","#1a4fa8","#ffffff"];
+  for(var i=0;i<16;i++){
+    var el=document.createElement("div");el.className="bp";
+    var ang=Math.random()*360,dist=50+Math.random()*80,sz=3+Math.random()*5;
+    var dx=Math.cos(ang*Math.PI/180)*dist,dy=Math.sin(ang*Math.PI/180)*dist;
+    el.style.cssText="left:50%;top:50%;width:"+sz+"px;height:"+sz+"px;background:"+cols[i%cols.length]+";--dx:"+dx+"px;--dy:"+dy+"px;animation-duration:"+(0.4+Math.random()*.3)+"s;animation-delay:0s;border-radius:50%;";
+    b.appendChild(el);
+  }
+  setTimeout(function(){b.innerHTML="";},900);
+}
+
+/* ════════════════════════════════════════════
+   SUCCESS BURST
+════════════════════════════════════════════ */
+function fireSuccess(){
+  var b=document.getElementById("burst");b.innerHTML="";
+  var cols=["#C8922A","#E8B448","#F5D080","#003087","#1a4fa8","#f5ede0","#E8B448","#C8922A"];
+  for(var i=0;i<32;i++){
+    var el=document.createElement("div");el.className="bp";
+    var ang=Math.random()*360,dist=80+Math.random()*150,sz=4+Math.random()*8;
+    var dx=Math.cos(ang*Math.PI/180)*dist,dy=Math.sin(ang*Math.PI/180)*dist;
+    el.style.cssText="left:50%;top:42%;width:"+sz+"px;height:"+sz+"px;background:"+cols[i%cols.length]+";--dx:"+dx+"px;--dy:"+dy+"px;animation-duration:"+(0.5+Math.random()*.4)+"s;animation-delay:"+(Math.random()*.09)+"s;border-radius:"+(Math.random()>.5?"50%":"3px")+";";
+    b.appendChild(el);
+  }
+  setTimeout(function(){b.innerHTML="";},1400);
+}
+
+/* ════════════════════════════════════════════
+   FINISH
+════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   SCORE SYSTEM
+   MCQ correct:    100 pts each  (5 questions  = max 500)
+   Seq correct:     50 pts each  (6 steps      = max 300)
+   Time bonus:     200 pts if ≤ 8 min, scaling down to 0 at 20 min
+   Wrong penalty:  -25 pts each wrong attempt (min 0)
+   TOTAL MAX:      1000 pts
+════════════════════════════════════════════ */
+function updateScoreDisplay(){
+  var el=document.getElementById("score-display");
+  if(el) el.textContent=S.score;
+}
+function calcFinalScore(elapsedSecs){
+  // Time bonus: max 200 at <=480s, linear decay to 0 at 1200s
+  var tb=0;
+  if(elapsedSecs<=480) tb=200;
+  else if(elapsedSecs<1200) tb=Math.round(200*(1-(elapsedSecs-480)/720));
+  // Wrong penalty
+  var pen=Math.min(S.score, S.wrongAttempts*25);
+  return Math.max(0, S.score + tb - pen);
+}
+function getGrade(finalScore){
+  if(finalScore>=900) return {g:"Gold",star:"⭐⭐⭐",c:"#C8922A"};
+  if(finalScore>=700) return {g:"Silver",star:"⭐⭐",c:"#aaaaaa"};
+  if(finalScore>=500) return {g:"Bronze",star:"⭐",c:"#cd7f32"};
+  return {g:"Insider",star:"🔓",c:"#7a6a50"};
+}
+
+function finishGame(){
+  if(S.finished)return;S.finished=true;playSuccess();
+  clearInterval(S.timerInt);
+  updateMap(TOTAL);updateTrainProg(TOTAL);
+  var e=elapsed();
+  var finalScore=calcFinalScore(e);
+  var grade=getGrade(finalScore);
+  document.getElementById("finish-time").textContent=fmt(e);
+  // Scoring breakdown
+  var breakdown=document.getElementById("score-breakdown");
+  if(breakdown){
+    var tb=finalScore-(S.score - Math.min(S.score,S.wrongAttempts*25));
+    breakdown.innerHTML=
+      '<div class="sb-row"><span>MCQ & Fill-in-Blank</span><span class="sb-pts">'+Math.min(S.correctFirst,5)*100+' pts</span></div>'+
+      '<div class="sb-row"><span>Supply Chain Steps</span><span class="sb-pts">'+Math.min(seqState.correctCount,6)*50+' pts</span></div>'+
+      '<div class="sb-row"><span>Time Bonus ('+fmt(e)+')</span><span class="sb-pts '+( tb>0?"sb-pos":"")+'">'+( tb>0?"+":"")+Math.max(0,tb)+' pts</span></div>'+
+      (S.wrongAttempts>0?'<div class="sb-row"><span>Wrong Attempts ('+S.wrongAttempts+'×)</span><span class="sb-pts sb-neg">−'+Math.min(S.score,S.wrongAttempts*25)+' pts</span></div>':'')+
+      '<div class="sb-total"><span>FINAL SCORE</span><span>'+finalScore+'</span></div>'+
+      '<div class="sb-grade" style="color:'+grade.c+'">'+grade.star+' '+grade.g+' Insider</div>';
+  }
+  fireSuccess();
+  S.myTime=e;
+  addToLocalLB(S.name,e);
+  setTimeout(function(){showScreen("complete-screen");},800);
+  if(S.demo){
+    document.getElementById("finish-rank").textContent="🎉 Vault unlocked in "+fmt(e)+"! (Demo mode — add Firebase URL for live multiplayer)";
+    // Stop polls after complete screen shown
+    setTimeout(function(){if(S.pollLB)clearInterval(S.pollLB);if(S.pollP)clearInterval(S.pollP);},1000);
+    return;
+  }
+  // Write to Firebase THEN re-render
+  fbPut("rooms/"+S.code+"/leaderboard/"+S.pid,{name:S.name,time:e,at:Date.now()})
+    .then(function(){return fbGet("rooms/"+S.code+"/leaderboard");})
+    .then(function(data){
+      if(S.pollLB)clearInterval(S.pollLB);
+      if(S.pollP)clearInterval(S.pollP);
+      if(!data)return;
+      renderLB(data);
+      var entries=Object.values(data).sort(function(a,b){return a.time-b.time;});
+      var rank=entries.findIndex(function(x){return x.name===S.name;})+1;
+      document.getElementById("finish-rank").textContent=
+        rank<=3?"🏅 Ranked #"+rank+" — "+["🥇","🥈","🥉"][rank-1]+" — Exceptional investigation!"
+               :"You ranked #"+rank+" among your team — well done!";
+    }).catch(function(){
+      if(S.pollLB)clearInterval(S.pollLB);
+      if(S.pollP)clearInterval(S.pollP);
+    });
+}
+
+// Add entry to local in-memory leaderboard (works in demo mode too)
+var localLB={};
+function addToLocalLB(name,time){
+  localLB[S.pid]={name:name,time:time,at:Date.now()};
+  renderLB(localLB);
+}
+
+/* ════════════════════════════════════════════
+   LEADERBOARD / PLAYERS
+════════════════════════════════════════════ */
+function renderLB(data){
+  var medals=["🥇","🥈","🥉"],rks=["r1","r2","r3"],avs=["🕵️","🔍","⚡","🌟","🧠","🦊","🚀","🎯","🌈","🎪"];
+  var empty=!data||Object.keys(data).length===0;
+  var allEntries=empty?[]:Object.values(data).sort(function(a,b){return a.time-b.time;});
+  var top3=allEntries.slice(0,3);
+
+  // ── Sidebar leaderboard ──
+  var c=document.getElementById("lblist");
+  if(c){
+    if(empty){
+      c.innerHTML='<div class="lb-empty">No one has unlocked the Vault yet.<br/>Be the first!</div>';
+    } else {
+      c.innerHTML=top3.map(function(e,i){
+        var av=avs[e.name.charCodeAt(0)%avs.length];
+        var isMe=(e.name===S.name);
+        return '<div class="lbe '+rks[i]+' new"'+(isMe?' style="border-color:rgba(212,168,67,.35);"':'')+'>'+
+          '<div class="lbrank">'+medals[i]+'</div>'+
+          '<div class="lbav">'+av+'</div>'+
+          '<div class="lbinfo"><div class="lbname">'+e.name+(isMe?' <span style="font-size:.6rem;color:var(--gold);">(you)</span>':'')+
+          '</div><div class="lbsub">Case closed</div></div>'+
+          '<div class="lbtime">'+fmt(e.time)+'</div></div>';
+      }).join("");
+    }
+  }
+
+  // ── Inline leaderboard on complete screen ──
+  var cc=document.getElementById("comp-lb-list");
+  if(cc){
+    if(empty){
+      cc.innerHTML='<div style="font-size:.75rem;color:var(--muted);font-style:italic;">No results yet.</div>';
+    } else {
+      cc.innerHTML=allEntries.map(function(e,i){
+        var isMe=(e.name===S.name);
+        var medal=i<3?medals[i]:("#"+(i+1));
+        var mcol=i===0?"var(--gold)":i===1?"#c0c0c0":i===2?"#cd7f32":"var(--muted)";
+        return '<div style="display:flex;align-items:center;gap:.6rem;padding:.55rem .85rem;border-radius:3px;'+
+          'border:1px solid '+(isMe?'rgba(212,168,67,.35)':'rgba(212,168,67,.07)')+';'+
+          'background:'+(isMe?'rgba(212,168,67,.06)':'rgba(255,255,255,.02)')+';margin-bottom:.4rem;">'+
+          '<div style="font-family:monospace;font-size:.85rem;min-width:28px;color:'+mcol+';">'+medal+'</div>'+
+          '<div style="flex:1;font-size:.8rem;font-weight:700;color:'+(isMe?'var(--gold3)':'var(--cream)')+';">'+e.name+(isMe?' \u2605':'')+
+          '</div><div style="font-family:monospace;font-size:.8rem;color:#4ade80;">'+fmt(e.time)+'</div></div>';
+      }).join("");
+    }
+  }
+}
+function renderPlayers(data){
+  var c=document.getElementById("alist");
+  if(!data||Object.keys(data).length===0){c.innerHTML='<span style="font-size:.7rem;color:rgba(86,80,80,.5)">No investigators yet</span>';return;}
+  c.innerHTML=Object.values(data).map(function(p){return '<div class="achip">🕵️ '+p.name+'</div>';}).join("");
+}
+
+/* Init */
+generateCode();
+</script>
+</body>
+</html>
