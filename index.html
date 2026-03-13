@@ -789,6 +789,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
   .ct-title{font-size:2.2rem;}
   .comp-card{padding:1.6rem 1.2rem;}
 }
+
+@keyframes shakeInput{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.input-shake{animation:shakeInput .35s ease;}
 </style>
 </head>
 <body>
@@ -928,6 +931,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
       <div>
         <div class="flabel">Your Name</div>
         <input type="text" id="inp-name" placeholder="Your name…" maxlength="22"/>
+        <div id="err-name" style="display:none;color:#c0392b;font-size:.72rem;margin-top:.3rem;padding:.25rem .5rem;background:#fff0f0;border-radius:3px;">⚠ Please enter your name</div>
       </div>
       <div>
         <div class="flabel">Room Code <span style="opacity:.45;font-size:.58rem">(share with your team)</span></div>
@@ -1372,6 +1376,7 @@ var S={
   score:0,correctFirst:0,wrongAttempts:0
 };
 var TOTAL=6;
+var _userReady=false;
 var STOPS=["Welcome Chamber · Briefing","Chamber 1 · The TATA Legacy","Chamber 2 · Birth of Tanishq","Chamber 3 · The Supply Chain","Chamber 4 · Brand Promises","Chamber 5 · Know Your Store","🏁 Vault Unlocked!"];
 
 /* ════════════════════════════════════════════
@@ -1588,13 +1593,28 @@ function copyCode(){
    JOIN
 ════════════════════════════════════════════ */
 function joinGame(){
+  if(typeof _userReady!=="undefined"&&!_userReady)return;
   if(S._joining)return; S._joining=true;
   setTimeout(function(){S._joining=false;},1500);
   playClick();
   var name=document.getElementById("inp-name").value.trim();
   var code=document.getElementById("inp-code").value.trim().toUpperCase();
   var stat=document.getElementById("fbstat");
-  if(!name){toast("⚠️ Please enter your name to continue","error");return;}
+  var errName=document.getElementById("err-name");
+  if(errName) errName.style.display="none";
+  if(!name){
+    if(errName){
+      errName.style.display="block";
+      var inp=document.getElementById("inp-name");
+      inp.focus();
+      inp.style.borderColor="#c0392b";
+      inp.classList.remove("input-shake");
+      void inp.offsetWidth;
+      inp.classList.add("input-shake");
+    }
+    S._joining=false;
+    return;
+  }
   if(!code){toast("⚠️ Please generate or enter a room code","error");return;}
   S.name=name;S.code=code;
   if(FB.indexOf("YOUR_PROJECT")>-1){
@@ -2038,14 +2058,22 @@ function renderPlayers(data){
 
 /* Init */
 document.getElementById("toasts").innerHTML="";
-// Enter key to submit
+generateCode();
+// Only allow joinGame after real user interaction
+document.addEventListener("click",function(){_userReady=true;},{once:true,capture:true});
+document.addEventListener("keydown",function(){_userReady=true;},{once:true,capture:true});
+document.addEventListener("touchstart",function(){_userReady=true;},{once:true,capture:true});
+// Enter key to submit — only fires after user interaction
 document.getElementById("inp-name").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){e.preventDefault();document.getElementById("join-btn").click();}
+  if(e.key==="Enter"&&_userReady){e.preventDefault();joinGame();}
+});
+document.getElementById("inp-name").addEventListener("input",function(){
+  var e=document.getElementById("err-name");if(e)e.style.display="none";
+  document.getElementById("inp-name").style.borderColor="";
 });
 document.getElementById("inp-code").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){e.preventDefault();document.getElementById("join-btn").click();}
+  if(e.key==="Enter"&&_userReady){e.preventDefault();joinGame();}
 });
-generateCode();
 </script>
 </body>
 </html>
