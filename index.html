@@ -933,7 +933,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
         <div class="flabel">Room Code <span style="opacity:.45;font-size:.58rem">(share with your team)</span></div>
         <div class="code-row">
           <input type="text" id="inp-code" placeholder="EXPRESS-4271" maxlength="16"/>
-          <button class="genbtn" onclick="generateCode()">🎲 Generate</button>
+          <button type="button" class="genbtn" onclick="generateCode()">🎲 Generate</button>
         </div>
       </div>
     </div>
@@ -948,7 +948,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
       <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:#003087;margin-bottom:.45rem;">📋 Share this code with your team</div>
       <div style="display:flex;align-items:center;gap:.5rem;">
         <div id="share-code-display" style="flex:1;font-family:'Courier Prime',monospace;font-size:1.1rem;color:#C8922A;letter-spacing:.08em;font-weight:700;"></div>
-        <button onclick="copyCode()" style="padding:.4rem .75rem;background:#fff;border:1px solid rgba(0,48,135,.2);border-radius:4px;color:#003087;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;transition:all .2s;" id="copy-btn">Copy</button>
+        <button type="button" onclick="copyCode()" style="padding:.4rem .75rem;background:#fff;border:1px solid rgba(0,48,135,.2);border-radius:4px;color:#003087;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;transition:all .2s;" id="copy-btn">Copy</button>
       </div>
     </div>
     <!-- SCORING INFO -->
@@ -962,7 +962,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
         <div class="si-total"><span>Max possible score</span><span>1000 pts</span></div>
       </div>
     </div>
-    <button class="board-btn" id="join-btn" onclick="joinGame()">💎 Enter the Vault</button>
+    <button type="button" class="board-btn" id="join-btn" onclick="joinGame()">💎 Enter the Vault</button>
     <div class="fbstat" id="fbstat"></div>
   </div>
 </div>
@@ -997,7 +997,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
     <div class="bubble intercom"><span class="bubble-label">🎙 Vault Keeper</span>"Welcome, new team member. Behind these six chambers lies the full story of Tanishq — its heritage, values, supply chain, and brand promises. Unlock them all and you earn your place as a true insider. Chamber One awaits."</div>
   </div>
   <div class="illus"><div class="illus-big">💍</div><div class="illus-cap">Every piece of Tanishq jewellery carries a story. So do you.</div></div>
-  <div class="ch-footer"><button class="cont-btn" onclick="goChapter(1)">Enter Chamber One <span class="arr">→</span></button></div>
+  <div class="ch-footer"><button type="button" class="cont-btn" onclick="goChapter(1)">Enter Chamber One <span class="arr">→</span></button></div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -1028,12 +1028,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
       <div class="pcard-body">
         <div class="p-q">Who founded the TATA Group and where is its headquarters located?</div>
         <div class="opts" id="q_c1_opts">
-          <button class="opt" onclick="answerQ('c1',0)"><span class="oletter">A</span>Ratan Tata — headquartered at Tata House, Mumbai</button>
-          <button class="opt" onclick="answerQ('c1',1)"><span class="oletter">B</span>Jamshedji Nusserwanji Tata — headquartered at Bombay House</button>
-          <button class="opt" onclick="answerQ('c1',2)"><span class="oletter">C</span>J.R.D. Tata — headquartered at Jamshedpur</button>
+          <button type="button" class="opt" onclick="answerQ('c1',0)"><span class="oletter">A</span>Ratan Tata — headquartered at Tata House, Mumbai</button>
+          <button type="button" class="opt" onclick="answerQ('c1',1)"><span class="oletter">B</span>Jamshedji Nusserwanji Tata — headquartered at Bombay House</button>
+          <button type="button" class="opt" onclick="answerQ('c1',2)"><span class="oletter">C</span>J.R.D. Tata — headquartered at Jamshedpur</button>
         </div>
         <div class="feedback" id="q_c1_fb"></div>
-        <button class="nxt-btn" id="q_c1_next" onclick="goChapter(2)">Enter Chamber Two →</button>
+        <button type="button" class="nxt-btn" id="q_c1_next" onclick="goChapter(2)">Enter Chamber Two →</button>
       </div>
     </div>
   </div>
@@ -1070,12 +1070,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
       <div class="pcard-body">
         <div class="p-q">What does the name "Tanishq" mean? Choose the most complete answer.</div>
         <div class="opts" id="q_c2_opts">
-          <button class="opt" onclick="answerQ('c2',0)"><span class="oletter">A</span>A Sanskrit word meaning "precious gemstone"</button>
-          <button class="opt" onclick="answerQ('c2',1)"><span class="oletter">B</span>"Tan" (body) + "Nishk" (gold ornament), also read as "Ta" (Tata) + "Nishq" (gold coin)</button>
-          <button class="opt" onclick="answerQ('c2',2)"><span class="oletter">C</span>Named after the town of Tanishk in Rajasthan, famous for gold craftsmanship</button>
+          <button type="button" class="opt" onclick="answerQ('c2',0)"><span class="oletter">A</span>A Sanskrit word meaning "precious gemstone"</button>
+          <button type="button" class="opt" onclick="answerQ('c2',1)"><span class="oletter">B</span>"Tan" (body) + "Nishk" (gold ornament), also read as "Ta" (Tata) + "Nishq" (gold coin)</button>
+          <button type="button" class="opt" onclick="answerQ('c2',2)"><span class="oletter">C</span>Named after the town of Tanishk in Rajasthan, famous for gold craftsmanship</button>
         </div>
         <div class="feedback" id="q_c2_fb"></div>
-        <button class="nxt-btn" id="q_c2_next" onclick="goChapter(3)">Enter Chamber Three →</button>
+        <button type="button" class="nxt-btn" id="q_c2_next" onclick="goChapter(3)">Enter Chamber Three →</button>
       </div>
     </div>
   </div>
@@ -1148,12 +1148,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
         <div class="p-case">Every Tanishq store has a state-of-the-art device that accurately measures the purity of gold in front of the customer. This makes Tanishq gold "as pure as we say it is."</div>
         <div class="p-q">What is the name of the device present in every Tanishq store to verify gold purity?</div>
         <div class="opts" id="q_t1_opts">
-          <button class="opt" onclick="answerQ('t1',0)"><span class="oletter">A</span>GoldScan Pro</button>
-          <button class="opt" onclick="answerQ('t1',1)"><span class="oletter">B</span>Karatmeter</button>
-          <button class="opt" onclick="answerQ('t1',2)"><span class="oletter">C</span>PurityCheck 3000</button>
+          <button type="button" class="opt" onclick="answerQ('t1',0)"><span class="oletter">A</span>GoldScan Pro</button>
+          <button type="button" class="opt" onclick="answerQ('t1',1)"><span class="oletter">B</span>Karatmeter</button>
+          <button type="button" class="opt" onclick="answerQ('t1',2)"><span class="oletter">C</span>PurityCheck 3000</button>
         </div>
         <div class="feedback" id="q_t1_fb"></div>
-        <button class="nxt-btn" id="q_t1_next" onclick="showReveal('r_t2')">Open Next Case →</button>
+        <button type="button" class="nxt-btn" id="q_t1_next" onclick="showReveal('r_t2')">Open Next Case →</button>
       </div>
     </div>
   </div>
@@ -1167,12 +1167,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
           <div class="p-case">All Tanishq precious stones are carefully selected for best-in-class quality. Tanishq offers a special exchange guarantee on them at current prices, making it India's leading diamond jeweller.</div>
           <div class="p-q">What exchange guarantee does Tanishq offer on its precious stones?</div>
           <div class="opts" id="q_t2_opts">
-            <button class="opt" onclick="answerQ('t2',0)"><span class="oletter">A</span>100% exchange at current prices (T&C apply)</button>
-            <button class="opt" onclick="answerQ('t2',1)"><span class="oletter">B</span>50% exchange at purchase price</button>
-            <button class="opt" onclick="answerQ('t2',2)"><span class="oletter">C</span>Exchange only within 1 year of purchase</button>
+            <button type="button" class="opt" onclick="answerQ('t2',0)"><span class="oletter">A</span>100% exchange at current prices (T&C apply)</button>
+            <button type="button" class="opt" onclick="answerQ('t2',1)"><span class="oletter">B</span>50% exchange at purchase price</button>
+            <button type="button" class="opt" onclick="answerQ('t2',2)"><span class="oletter">C</span>Exchange only within 1 year of purchase</button>
           </div>
           <div class="feedback" id="q_t2_fb"></div>
-          <button class="nxt-btn" id="q_t2_next" onclick="showReveal('r_t3')">Open Final Case →</button>
+          <button type="button" class="nxt-btn" id="q_t2_next" onclick="showReveal('r_t3')">Open Final Case →</button>
         </div>
       </div>
     </div>
@@ -1187,12 +1187,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
           <div class="p-case">When a customer brings old gold to exchange at Tanishq, the process is done completely in the open — the gold is melted and weighed in the customer's presence.</div>
           <div class="p-q">Why does Tanishq melt old gold in front of the customer during exchange?</div>
           <div class="opts" id="q_t3_opts">
-            <button class="opt" onclick="answerQ('t3',0)"><span class="oletter">A</span>To speed up the process and serve more customers</button>
-            <button class="opt" onclick="answerQ('t3',1)"><span class="oletter">B</span>It is a traditional ritual required by BIS regulations</button>
-            <button class="opt" onclick="answerQ('t3',2)"><span class="oletter">C</span>To ensure complete transparency — so weight and karatage are always right and the customer gets the best exchange value</button>
+            <button type="button" class="opt" onclick="answerQ('t3',0)"><span class="oletter">A</span>To speed up the process and serve more customers</button>
+            <button type="button" class="opt" onclick="answerQ('t3',1)"><span class="oletter">B</span>It is a traditional ritual required by BIS regulations</button>
+            <button type="button" class="opt" onclick="answerQ('t3',2)"><span class="oletter">C</span>To ensure complete transparency — so weight and karatage are always right and the customer gets the best exchange value</button>
           </div>
           <div class="feedback" id="q_t3_fb"></div>
-          <button class="nxt-btn" id="q_t3_next" onclick="goChapter(5)">Enter Chamber Five →</button>
+          <button type="button" class="nxt-btn" id="q_t3_next" onclick="goChapter(5)">Enter Chamber Five →</button>
         </div>
       </div>
     </div>
@@ -1229,9 +1229,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
         <div class="p-fitb">Tanishq's Vision is: "To be the most <span class="blank" id="b1">_________</span> jewellery brand for Indian women."</div>
         <div class="p-hint">💡 Hint: This word means something that people strongly want to have or achieve — aspirational and covetable.</div>
         <div class="opts" id="q_f1_opts">
-          <button class="opt" onclick="answerFitb('f1',0,'Desirable')"><span class="oletter">A</span>Desirable</button>
-          <button class="opt" onclick="answerFitb('f1',1,'Affordable')"><span class="oletter">B</span>Affordable</button>
-          <button class="opt" onclick="answerFitb('f1',2,'Profitable')"><span class="oletter">C</span>Profitable</button>
+          <button type="button" class="opt" onclick="answerFitb('f1',0,'Desirable')"><span class="oletter">A</span>Desirable</button>
+          <button type="button" class="opt" onclick="answerFitb('f1',1,'Affordable')"><span class="oletter">B</span>Affordable</button>
+          <button type="button" class="opt" onclick="answerFitb('f1',2,'Profitable')"><span class="oletter">C</span>Profitable</button>
         </div>
         <div class="feedback" id="q_f1_fb"></div>
       </div>
@@ -1247,9 +1247,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
           <div class="p-fitb">Tanishq's Mission: "We will continuously create wealth for all our stakeholders, by transforming the jewellery business and by being the gold standard in design, shopping experience and <span class="blank" id="b2">_________</span> practices."</div>
           <div class="p-hint">💡 Hint: A word that describes honesty, fairness, and doing the right thing — central to TATA's Code of Conduct.</div>
           <div class="opts" id="q_f2_opts">
-            <button class="opt" onclick="answerFitb('f2',0,'Ethical')"><span class="oletter">A</span>Ethical</button>
-            <button class="opt" onclick="answerFitb('f2',1,'Profitable')"><span class="oletter">B</span>Profitable</button>
-            <button class="opt" onclick="answerFitb('f2',2,'Digital')"><span class="oletter">C</span>Digital</button>
+            <button type="button" class="opt" onclick="answerFitb('f2',0,'Ethical')"><span class="oletter">A</span>Ethical</button>
+            <button type="button" class="opt" onclick="answerFitb('f2',1,'Profitable')"><span class="oletter">B</span>Profitable</button>
+            <button type="button" class="opt" onclick="answerFitb('f2',2,'Digital')"><span class="oletter">C</span>Digital</button>
           </div>
           <div class="feedback" id="q_f2_fb"></div>
         </div>
@@ -1266,12 +1266,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
           <div class="p-fitb">Through Tanishq's <span class="blank" id="b3">_________</span> scheme, customers can accumulate lump sums over many months and buy the jewellery they always wanted — while never worrying about the gold price going up.</div>
           <div class="p-hint">💡 Hint: It's named after a farming concept — saving steadily over time to reap a rich reward at harvest time. Two words.</div>
           <div class="opts" id="q_f3_opts">
-            <button class="opt" onclick="answerFitb('f3',0,'Golden Harvest')"><span class="oletter">A</span>Golden Harvest</button>
-            <button class="opt" onclick="answerFitb('f3',1,'Gold Savings')"><span class="oletter">B</span>Gold Savings</button>
-            <button class="opt" onclick="answerFitb('f3',2,'Jewel Plan')"><span class="oletter">C</span>Jewel Plan</button>
+            <button type="button" class="opt" onclick="answerFitb('f3',0,'Golden Harvest')"><span class="oletter">A</span>Golden Harvest</button>
+            <button type="button" class="opt" onclick="answerFitb('f3',1,'Gold Savings')"><span class="oletter">B</span>Gold Savings</button>
+            <button type="button" class="opt" onclick="answerFitb('f3',2,'Jewel Plan')"><span class="oletter">C</span>Jewel Plan</button>
           </div>
           <div class="feedback" id="q_f3_fb"></div>
-          <button class="nxt-btn" id="q_f3_next" onclick="finishGame()">💎 Unlock the Golden Vault!</button>
+          <button type="button" class="nxt-btn" id="q_f3_next" onclick="finishGame()">💎 Unlock the Golden Vault!</button>
         </div>
       </div>
     </div>
@@ -1314,7 +1314,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(247,244,239,.97);border
       <div class="finding"><span class="finding-dot">◆</span>Tanishq's Vision: "To be the most Desirable jewellery brand for Indian women." Mission: Creating wealth while upholding ethical practices.</div>
       <div class="finding"><span class="finding-dot">◆</span>The Golden Harvest scheme lets customers save monthly and purchase dream jewellery — one of Tanishq's most trusted customer loyalty programmes.</div>
     </div>
-    <button class="board-again" onclick="location.reload()">💎 Play Again</button>
+    <button type="button" class="board-again" onclick="location.reload()">💎 Play Again</button>
     <!-- Inline leaderboard on complete screen -->
     <div id="comp-lb" style="margin-top:1.5rem;text-align:left;">
       <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.7rem;">🏆 Final Leaderboard</div>
@@ -1379,7 +1379,6 @@ var STOPS=["Welcome Chamber · Briefing","Chamber 1 · The TATA Legacy","Chamber
 ════════════════════════════════════════════ */
 // Curtain out
 setTimeout(function(){document.getElementById("curtain").classList.add("out");},2900);
-setTimeout(function(){var n=document.getElementById("inp-name");if(n)n.focus();},3200);
 
 /* Build vault progress map */
 function buildMobilePips(){
@@ -1420,7 +1419,8 @@ function showScreen(id){
     el.style.display="none";el.classList.remove("active","vis");
   });
   var el=document.getElementById(id);if(!el)return;
-  el.style.display=(id==="complete-screen")?"flex":"block";
+  // join-screen and complete-screen need flex, chapters need block
+  el.style.display=(id==="join-screen"||id==="complete-screen")?"flex":"block";
   el.classList.add("active");
   setTimeout(function(){el.classList.add("vis");},40);
   window.scrollTo({top:0,behavior:"smooth"});
@@ -1588,6 +1588,8 @@ function copyCode(){
    JOIN
 ════════════════════════════════════════════ */
 function joinGame(){
+  if(S._joining)return; S._joining=true;
+  setTimeout(function(){S._joining=false;},1500);
   playClick();
   var name=document.getElementById("inp-name").value.trim();
   var code=document.getElementById("inp-code").value.trim().toUpperCase();
@@ -2035,6 +2037,14 @@ function renderPlayers(data){
 }
 
 /* Init */
+document.getElementById("toasts").innerHTML="";
+// Enter key to submit
+document.getElementById("inp-name").addEventListener("keydown",function(e){
+  if(e.key==="Enter"){e.preventDefault();document.getElementById("join-btn").click();}
+});
+document.getElementById("inp-code").addEventListener("keydown",function(e){
+  if(e.key==="Enter"){e.preventDefault();document.getElementById("join-btn").click();}
+});
 generateCode();
 </script>
 </body>
